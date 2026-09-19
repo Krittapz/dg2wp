@@ -1,1 +1,764 @@
-<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">ol{margin:0;padding:0}table td,table th{padding:0}.c0{color:#1f1f1f;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c2{padding-top:0pt;padding-bottom:12.8pt;line-height:1.149999976158142;text-align:left}.c1{padding-top:0pt;padding-bottom:8.6pt;line-height:1.149999976158142;text-align:left}.c4{background-color:#ffffff;max-width:468pt;padding:72pt 72pt 72pt 72pt}.c3{height:11pt}.title{padding-top:24pt;color:#000000;font-weight:700;font-size:36pt;padding-bottom:6pt;font-family:"Arial";line-height:1.0;page-break-after:avoid;text-align:left}.subtitle{padding-top:18pt;color:#666666;font-size:24pt;padding-bottom:4pt;font-family:"Georgia";line-height:1.0;page-break-after:avoid;font-style:italic;text-align:left}li{color:#000000;font-size:11pt;font-family:"Arial"}p{margin:0;color:#000000;font-size:11pt;font-family:"Arial"}h1{padding-top:12pt;color:#000000;font-weight:700;font-size:24pt;padding-bottom:12pt;font-family:"Arial";line-height:1.0;text-align:left}h2{padding-top:11.2pt;color:#000000;font-weight:700;font-size:18pt;padding-bottom:11.2pt;font-family:"Arial";line-height:1.0;text-align:left}h3{padding-top:12pt;color:#000000;font-weight:700;font-size:14pt;padding-bottom:12pt;font-family:"Arial";line-height:1.0;text-align:left}h4{padding-top:12.8pt;color:#000000;font-weight:700;font-size:12pt;padding-bottom:12.8pt;font-family:"Arial";line-height:1.0;text-align:left}h5{padding-top:12.8pt;color:#000000;font-weight:700;font-size:9pt;padding-bottom:12.8pt;font-family:"Arial";line-height:1.0;text-align:left}h6{padding-top:18pt;color:#000000;font-weight:700;font-size:8pt;padding-bottom:18pt;font-family:"Arial";line-height:1.0;text-align:left}</style></head><body class="c4 doc-content"><p class="c1"><span class="c0">html, body {</span></p><p class="c1"><span class="c0">width: 100%;</span></p><p class="c1"><span class="c0">min-height: 100vh;</span></p><p class="c1"><span class="c0">background-color: #0b1120;</span></p><p class="c1"><span class="c0">color: #f1f5f9;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">body {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">flex-direction: column;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">padding: 12px 16px;</span></p><p class="c1"><span class="c0">overflow-x: hidden;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">/* Responsive Toolbar */</span></p><p class="c1"><span class="c0">.toolbar {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">flex-wrap: wrap;</span></p><p class="c1"><span class="c0">gap: 10px;</span></p><p class="c1"><span class="c0">margin-bottom: 12px;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">width: 100%;</span></p><p class="c1"><span class="c0">max-width: 1280px;</span></p><p class="c1"><span class="c0">z-index: 20;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.toolbar-left, .toolbar-right {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">flex-wrap: wrap;</span></p><p class="c1"><span class="c0">gap: 8px;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.btn {</span></p><p class="c1"><span class="c0">padding: 7px 14px;</span></p><p class="c1"><span class="c0">border-radius: 8px;</span></p><p class="c1"><span class="c0">font-size: 12.5px;</span></p><p class="c1"><span class="c0">font-weight: 600;</span></p><p class="c1"><span class="c0">cursor: pointer;</span></p><p class="c1"><span class="c0">border: 1px solid #334155;</span></p><p class="c1"><span class="c0">background: #1e293b;</span></p><p class="c1"><span class="c0">color: #f8fafc;</span></p><p class="c1"><span class="c0">display: inline-flex;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">gap: 6px;</span></p><p class="c1"><span class="c0">transition: all 0.2s ease;</span></p><p class="c1"><span class="c0">user-select: none;</span></p><p class="c1"><span class="c0">-webkit-tap-highlight-color: transparent;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.btn:hover { background: #334155; border-color: #64748b; }</span></p><p class="c1"><span class="c0">.btn-primary {</span></p><p class="c1"><span class="c0">background: linear-gradient(135deg, #10b981 0%, #059669 100%);</span></p><p class="c1"><span class="c0">border-color: #10b981;</span></p><p class="c1"><span class="c0">color: #ffffff;</span></p><p class="c1"><span class="c0">box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.btn-primary:hover {</span></p><p class="c1"><span class="c0">background: linear-gradient(135deg, #34d399 0%, #10b981 100%);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">/* Device Orientation / Mobile Notice */</span></p><p class="c1"><span class="c0">.mobile-hint {</span></p><p class="c1"><span class="c0">display: none;</span></p><p class="c1"><span class="c0">font-size: 11px;</span></p><p class="c1"><span class="c0">color: #38bdf8;</span></p><p class="c1"><span class="c0">background: rgba(56, 189, 248, 0.1);</span></p><p class="c1"><span class="c0">border: 1px solid rgba(56, 189, 248, 0.25);</span></p><p class="c1"><span class="c0">padding: 6px 12px;</span></p><p class="c1"><span class="c0">border-radius: 6px;</span></p><p class="c1"><span class="c0">margin-bottom: 8px;</span></p><p class="c1"><span class="c0">width: 100%;</span></p><p class="c1"><span class="c0">max-width: 1280px;</span></p><p class="c1"><span class="c0">text-align: center;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">@media (max-width: 768px) and (orientation: portrait) {</span></p><p class="c1"><span class="c0">.mobile-hint { display: block; }</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">/* Responsive Stage Container - Auto Scales to Fit any Viewport */</span></p><p class="c1"><span class="c0">.stage-wrapper {</span></p><p class="c1"><span class="c0">width: 100%;</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">justify-content: center;</span></p><p class="c1"><span class="c0">align-items: flex-start;</span></p><p class="c1"><span class="c0">position: relative;</span></p><p class="c1"><span class="c0">overflow: visible;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.stage-scaler {</span></p><p class="c1"><span class="c0">transform-origin: top center;</span></p><p class="c1"><span class="c0">transition: transform 0.15s ease-out;</span></p><p class="c1"><span class="c0">flex-shrink: 0;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">/* Slide 16:9 Standard Frame */</span></p><p class="c1"><span class="c0">.presentation-wrapper {</span></p><p class="c1"><span class="c0">width: 1280px;</span></p><p class="c1"><span class="c0">height: 720px;</span></p><p class="c1"><span class="c0">background-color: #0d1527;</span></p><p class="c1"><span class="c0">border: 1px solid #1e293b;</span></p><p class="c1"><span class="c0">border-radius: 12px;</span></p><p class="c1"><span class="c0">box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8);</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">flex-direction: column;</span></p><p class="c1"><span class="c0">position: relative;</span></p><p class="c1"><span class="c0">overflow: hidden;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.presentation-wrapper.light-theme {</span></p><p class="c1"><span class="c0">background-color: #f8fafc;</span></p><p class="c1"><span class="c0">border-color: #cbd5e1;</span></p><p class="c1"><span class="c0">color: #0f172a;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">/* Header */</span></p><p class="c1"><span class="c0">.slide-header {</span></p><p class="c1"><span class="c0">height: 76px;</span></p><p class="c1"><span class="c0">padding: 14px 32px 10px 32px;</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">border-bottom: 1px solid rgba(255, 255, 255, 0.08);</span></p><p class="c1"><span class="c0">z-index: 10;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.light-theme .slide-header { border-bottom-color: rgba(0, 0, 0, 0.08); }</span></p><p class="c1"><span class="c0">.title-group h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }</span></p><p class="c1"><span class="c0">.title-group p { font-size: 12px; color: #94a3b8; margin-top: 2px; }</span></p><p class="c1"><span class="c0">.light-theme .title-group p { color: #64748b; }</span></p><p class="c1"><span class="c0">.header-metrics {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">gap: 8px;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.metric-badge {</span></p><p class="c1"><span class="c0">padding: 4px 10px;</span></p><p class="c1"><span class="c0">border-radius: 6px;</span></p><p class="c1"><span class="c0">font-size: 11.5px;</span></p><p class="c1"><span class="c0">font-weight: 700;</span></p><p class="c1"><span class="c0">white-space: nowrap;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.badge-core { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }</span></p><p class="c1"><span class="c0">.badge-opt { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }</span></p><p class="c1"><span class="c0">/* Body Content */</span></p><p class="c1"><span class="c0">.slide-body {</span></p><p class="c1"><span class="c0">flex: 1;</span></p><p class="c1"><span class="c0">display: grid;</span></p><p class="c1"><span class="c0">grid-template-columns: 320px 1fr 340px;</span></p><p class="c1"><span class="c0">padding: 10px 32px 16px 32px;</span></p><p class="c1"><span class="c0">position: relative;</span></p><p class="c1"><span class="c0">z-index: 10;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.col-title {</span></p><p class="c1"><span class="c0">font-size: 11.5px;</span></p><p class="c1"><span class="c0">font-weight: 800;</span></p><p class="c1"><span class="c0">text-transform: uppercase;</span></p><p class="c1"><span class="c0">letter-spacing: 0.8px;</span></p><p class="c1"><span class="c0">margin-bottom: 8px;</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">padding-bottom: 4px;</span></p><p class="c1"><span class="c0">border-bottom: 1px solid rgba(255, 255, 255, 0.08);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.light-theme .col-title { border-bottom-color: rgba(0, 0, 0, 0.08); }</span></p><p class="c1"><span class="c0">.col-title.left { color: #38bdf8; }</span></p><p class="c1"><span class="c0">.col-title.right { color: #34d399; }</span></p><p class="c1"><span class="c0">/* Left DG List */</span></p><p class="c1"><span class="c0">.col-subpillars {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">flex-direction: column;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">height: calc(100% - 24px);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.dg-item {</span></p><p class="c1"><span class="c0">font-size: 11px;</span></p><p class="c1"><span class="c0">font-weight: 500;</span></p><p class="c1"><span class="c0">padding: 4.5px 10px;</span></p><p class="c1"><span class="c0">border-radius: 5px;</span></p><p class="c1"><span class="c0">background: #162032;</span></p><p class="c1"><span class="c0">border-left: 4px solid #64748b;</span></p><p class="c1"><span class="c0">color: #cbd5e1;</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">cursor: pointer;</span></p><p class="c1"><span class="c0">transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;</span></p><p class="c1"><span class="c0">user-select: none;</span></p><p class="c1"><span class="c0">-webkit-tap-highlight-color: transparent;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.light-theme .dg-item {</span></p><p class="c1"><span class="c0">background: #ffffff;</span></p><p class="c1"><span class="c0">color: #1e293b;</span></p><p class="c1"><span class="c0">box-shadow: 0 1px 3px rgba(0,0,0,0.06);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.dg-item:hover, .dg-item.active { transform: translateX(3px); }</span></p><p class="c1"><span class="c0">.dg-item .dg-code { font-weight: 700; font-size: 9.5px; opacity: 0.85; padding: 1px 4px; border-radius: 3px; }</span></p><p class="c1"><span class="c0">/* Right Work Package List */</span></p><p class="c1"><span class="c0">.col-wps {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">flex-direction: column;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">height: calc(100% - 24px);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.wp-card {</span></p><p class="c1"><span class="c0">padding: 8px 12px;</span></p><p class="c1"><span class="c0">border-radius: 8px;</span></p><p class="c1"><span class="c0">background: #162032;</span></p><p class="c1"><span class="c0">border-left: 6px solid #64748b;</span></p><p class="c1"><span class="c0">cursor: pointer;</span></p><p class="c1"><span class="c0">transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;</span></p><p class="c1"><span class="c0">user-select: none;</span></p><p class="c1"><span class="c0">-webkit-tap-highlight-color: transparent;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.light-theme .wp-card {</span></p><p class="c1"><span class="c0">background: #ffffff;</span></p><p class="c1"><span class="c0">box-shadow: 0 1px 4px rgba(0,0,0,0.06);</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.wp-card:hover, .wp-card.active { transform: translateX(-3px); }</span></p><p class="c1"><span class="c0">.wp-header {</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">margin-bottom: 2px;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.wp-title { font-size: 12.5px; font-weight: 800; }</span></p><p class="c1"><span class="c0">.wp-badge {</span></p><p class="c1"><span class="c0">font-size: 9px;</span></p><p class="c1"><span class="c0">font-weight: 800;</span></p><p class="c1"><span class="c0">padding: 2px 6px;</span></p><p class="c1"><span class="c0">border-radius: 4px;</span></p><p class="c1"><span class="c0">text-transform: uppercase;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.wp-desc {</span></p><p class="c1"><span class="c0">font-size: 10px;</span></p><p class="c1"><span class="c0">color: #94a3b8;</span></p><p class="c1"><span class="c0">line-height: 1.25;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.light-theme .wp-desc { color: #64748b; }</span></p><p class="c1"><span class="c0">/* SVG Ribbon Canvas Layer */</span></p><p class="c1"><span class="c0">svg.sankey-layer {</span></p><p class="c1"><span class="c0">position: absolute;</span></p><p class="c1"><span class="c0">top: 0;</span></p><p class="c1"><span class="c0">left: 0;</span></p><p class="c1"><span class="c0">width: 1280px;</span></p><p class="c1"><span class="c0">height: 720px;</span></p><p class="c1"><span class="c0">pointer-events: none;</span></p><p class="c1"><span class="c0">z-index: 1;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.sankey-path {</span></p><p class="c1"><span class="c0">fill: none;</span></p><p class="c1"><span class="c0">transition: stroke-opacity 0.2s ease, stroke-width 0.2s ease;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">/* Footer */</span></p><p class="c1"><span class="c0">.slide-footer {</span></p><p class="c1"><span class="c0">height: 38px;</span></p><p class="c1"><span class="c0">padding: 0 32px 8px 32px;</span></p><p class="c1"><span class="c0">display: flex;</span></p><p class="c1"><span class="c0">justify-content: space-between;</span></p><p class="c1"><span class="c0">align-items: center;</span></p><p class="c1"><span class="c0">font-size: 11px;</span></p><p class="c1"><span class="c0">color: #64748b;</span></p><p class="c1"><span class="c0">border-top: 1px solid rgba(255, 255, 255, 0.05);</span></p><p class="c1"><span class="c0">z-index: 10;</span></p><p class="c1"><span class="c0">}</span></p><p class="c1"><span class="c0">.light-theme .slide-footer { border-top-color: rgba(0, 0, 0, 0.05); color: #94a3b8; }</span></p><p class="c1 c3"><span class="c0"></span></p><p class="c2"><span class="c0">&nbsp; &lt;div class=&quot;slide-body&quot;&gt;<br> &nbsp; &nbsp;&lt;!-- Left: DG Subpillars --&gt;<br> &nbsp; &nbsp;&lt;div&gt;<br> &nbsp; &nbsp; &nbsp;&lt;div class=&quot;col-title left&quot;&gt;<br> &nbsp; &nbsp; &nbsp; &nbsp;&lt;span&gt;DG Survey (20 Subpillars)&lt;/span&gt;<br> &nbsp; &nbsp; &nbsp; &nbsp;&lt;span&gt;Pillar 1 - 7&lt;/span&gt;<br> &nbsp; &nbsp; &nbsp;&lt;/div&gt;<br> &nbsp; &nbsp; &nbsp;&lt;div class=&quot;col-subpillars&quot; id=&quot;dgContainer&quot;&gt;&lt;/div&gt;<br> &nbsp; &nbsp;&lt;/div&gt;<br><br> &nbsp; &nbsp;&lt;!-- Center Space for Bezier Ribbon Flow --&gt;<br> &nbsp; &nbsp;&lt;div&gt;&lt;/div&gt;<br><br> &nbsp; &nbsp;&lt;!-- Right: Work Packages --&gt;<br> &nbsp; &nbsp;&lt;div&gt;<br> &nbsp; &nbsp; &nbsp;&lt;div class=&quot;col-title right&quot;&gt;<br> &nbsp; &nbsp; &nbsp; &nbsp;&lt;span&gt;Work Packages (WP01 - WP08)&lt;/span&gt;<br> &nbsp; &nbsp; &nbsp; &nbsp;&lt;span&gt;Priority Group&lt;/span&gt;<br> &nbsp; &nbsp; &nbsp;&lt;/div&gt;<br> &nbsp; &nbsp; &nbsp;&lt;div class=&quot;col-wps&quot; id=&quot;wpContainer&quot;&gt;&lt;/div&gt;<br> &nbsp; &nbsp;&lt;/div&gt;<br> &nbsp;&lt;/div&gt;<br><br> &nbsp;&lt;!-- SVG Curved Connections with explicit 1280x720 viewBox --&gt;<br> &nbsp;&lt;svg class=&quot;sankey-layer&quot; id=&quot;sankeySvg&quot; viewBox=&quot;0 0 1280 720&quot;&gt;&lt;/svg&gt;<br><br> &nbsp;&lt;div class=&quot;slide-footer&quot;&gt;<br> &nbsp; &nbsp;&lt;span&gt;&#3626;&#3606;&#3634;&#3611;&#3633;&#3605;&#3618;&#3585;&#3619;&#3619;&#3617;&#3617;&#3634;&#3605;&#3619;&#3585;&#3634;&#3619;&#3618;&#3585;&#3619;&#3632;&#3604;&#3633;&#3610; DG Transformation &bull; &#3629;&#3633;&#3605;&#3619;&#3634;&#3626;&#3656;&#3623;&#3609;&#3626;&#3652;&#3621;&#3604;&#3660; 16:9 &#3617;&#3634;&#3605;&#3619;&#3600;&#3634;&#3609;&lt;/span&gt;<br> &nbsp; &nbsp;&lt;span&gt;&#3626;&#3619;&#3640;&#3611;&#3586;&#3657;&#3629;&#3617;&#3641;&#3621;: &#3619;&#3623;&#3617;&#3648;&#3619;&#3639;&#3656;&#3629;&#3591; Data &#3648;&#3611;&#3655;&#3609; WP01 &#3649;&#3621;&#3632;&#3619;&#3623;&#3617;&#3588;&#3623;&#3634;&#3617;&#3617;&#3633;&#3656;&#3609;&#3588;&#3591;&#3650;&#3588;&#3619;&#3591;&#3626;&#3619;&#3657;&#3634;&#3591;&#3614;&#3639;&#3657;&#3609;&#3600;&#3634;&#3609;&#3648;&#3611;&#3655;&#3609; WP06&lt;/span&gt;<br> &nbsp;&lt;/div&gt;<br>&lt;/div&gt;<br></span></p></body></html>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DG Survey to Work Package - Executive Presentation (16:9)</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #0b1120;
+    color: #f1f5f9;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 16px;
+    overflow-x: hidden;
+  }
+
+  /* Responsive Toolbar */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1280px;
+    z-index: 20;
+  }
+
+  .toolbar-left, .toolbar-right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: #f8fafc;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:hover { background: #334155; border-color: #64748b; }
+  .btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-color: #10b981;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  }
+
+  /* Device Orientation / Mobile Notice */
+  .mobile-hint {
+    display: none;
+    font-size: 11px;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    width: 100%;
+    max-width: 1280px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) and (orientation: portrait) {
+    .mobile-hint { display: block; }
+  }
+
+  /* Responsive Stage Container - Auto Scales to Fit any Viewport */
+  .stage-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    overflow: visible;
+  }
+
+  .stage-scaler {
+    transform-origin: top center;
+    transition: transform 0.15s ease-out;
+    flex-shrink: 0;
+  }
+
+  /* Slide 16:9 Standard Frame */
+  .presentation-wrapper {
+    width: 1280px;
+    height: 720px;
+    background-color: #0d1527;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .presentation-wrapper.light-theme {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+  }
+
+  /* Header */
+  .slide-header {
+    height: 76px;
+    padding: 14px 32px 10px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 10;
+  }
+  .light-theme .slide-header { border-bottom-color: rgba(0, 0, 0, 0.08); }
+  .title-group h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
+  .title-group p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .light-theme .title-group p { color: #64748b; }
+
+  .header-metrics {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .metric-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge-core { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .badge-opt { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+  /* Body Content */
+  .slide-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 320px 1fr 340px;
+    padding: 10px 32px 16px 32px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .col-title {
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .light-theme .col-title { border-bottom-color: rgba(0, 0, 0, 0.08); }
+  .col-title.left { color: #38bdf8; }
+  .col-title.right { color: #34d399; }
+
+  /* Left DG List */
+  .col-subpillars {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 24px);
+  }
+  .dg-item {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4.5px 10px;
+    border-radius: 5px;
+    background: #162032;
+    border-left: 4px solid #64748b;
+    color: #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .light-theme .dg-item {
+    background: #ffffff;
+    color: #1e293b;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .dg-item:hover, .dg-item.active { transform: translateX(3px); }
+  .dg-item .dg-code { font-weight: 700; font-size: 9.5px; opacity: 0.85; padding: 1px 4px; border-radius: 3px; }
+
+  /* Right Work Package List */
+  .col-wps {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 24px);
+  }
+  .wp-card {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #162032;
+    border-left: 6px solid #64748b;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .light-theme .wp-card {
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .wp-card:hover, .wp-card.active { transform: translateX(-3px); }
+  .wp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  .wp-title { font-size: 12.5px; font-weight: 800; }
+  .wp-badge {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .wp-desc {
+    font-size: 10px;
+    color: #94a3b8;
+    line-height: 1.25;
+  }
+  .light-theme .wp-desc { color: #64748b; }
+
+  /* SVG Ribbon Canvas Layer */
+  svg.sankey-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 720px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .sankey-path {
+    fill: none;
+    transition: stroke-opacity 0.2s ease, stroke-width 0.2s ease;
+  }
+
+  /* Footer */
+  .slide-footer {
+    height: 38px;
+    padding: 0 32px 8px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 10;
+  }
+  .light-theme .slide-footer { border-top-color: rgba(0, 0, 0, 0.05); color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<div class="mobile-hint">
+  💡 หากเปิดจากมือถือ แนะนำหมุนหน้าจอแนวนอน (Landscape) เพื่อความชัดเจนสูงสุด
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <button class="btn" onclick="toggleTheme()">🌗 สลับธีม ขาว/ดำ</button>
+    <button class="btn" onclick="clearHighlight()">🔄 ล้างการเลือก</button>
+    <span style="font-size: 11.5px; color: #94a3b8;">* แตะหรือชี้เมาส์ที่รายการเพื่อดูความเชื่อมโยง</span>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn btn-primary" onclick="downloadImage()">
+      📥 ดาวน์โหลดภาพสไลด์ PPT (1920x1080)
+    </button>
+  </div>
+</div>
+
+<!-- Auto-Scaling Stage -->
+<div class="stage-wrapper" id="stageWrapper">
+  <div class="stage-scaler" id="stageScaler">
+    <div class="presentation-wrapper" id="slideFrame">
+      <div class="slide-header">
+        <div class="title-group">
+          <h1>DG Survey Subpillars ➔ Work Packages Transformation</h1>
+          <p>โครงสร้างการจัดกลุ่มเกณฑ์ประเมินเดิมสู่แผนงานขับเคลื่อนองค์กรดิจิทัล (8 Work Packages)</p>
+        </div>
+        <div class="header-metrics">
+          <span class="metric-badge badge-core">Core Priority 65% (13 ข้อ)</span>
+          <span class="metric-badge badge-opt">Optional Priority 35% (7 ข้อ)</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <!-- Left: DG Subpillars -->
+        <div>
+          <div class="col-title left">
+            <span>DG Survey (20 Subpillars)</span>
+            <span>Pillar 1 - 7</span>
+          </div>
+          <div class="col-subpillars" id="dgContainer"></div>
+        </div>
+
+        <!-- Center Space for Bezier Flows -->
+        <div></div>
+
+        <!-- Right: Work Packages -->
+        <div>
+          <div class="col-title right">
+            <span>Work Packages (WP01 - WP08)</span>
+            <span>Priority Group</span>
+          </div>
+          <div class="col-wps" id="wpContainer"></div>
+        </div>
+      </div>
+
+      <!-- SVG Curved Connections with fixed 1280x720 viewBox -->
+      <svg class="sankey-layer" id="sankeySvg" viewBox="0 0 1280 720"></svg>
+
+      <div class="slide-footer">
+        <span>สถาปัตยกรรมมาตรการยกระดับ DG Transformation &bull; อัตราส่วนสไลด์ 16:9 มาตรฐาน</span>
+        <span>สรุปข้อมูล: รวมเรื่อง Data เป็น WP01 และรวมความมั่นคงโครงสร้างพื้นฐานเป็น WP06</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const items = [
+  { id: '1-1', code: '1.1', name: 'pillar1 - 1.1 Digital policy', wp: 'WP07' },
+  { id: '1-2', code: '1.2', name: 'pillar1 - 1.2 Cyber Security Policy', wp: 'WP06' },
+  { id: '1-3', code: '1.3', name: 'pillar1 - 1.3 Legal & Regulatory Mechanism', wp: 'WP07' },
+  { id: '1-4', code: '1.4', name: 'pillar1 - 1.4 Data Policy', wp: 'WP01' },
+  { id: '2-1', code: '2.1', name: 'pillar2 - 2.1 Data Governance', wp: 'WP01' },
+  { id: '2-2', code: '2.2', name: 'pillar2 - 2.2 Data Privacy', wp: 'WP01' },
+  { id: '2-3', code: '2.3', name: 'pillar2 - 2.3 Open Data', wp: 'WP01' },
+  { id: '2-4', code: '2.4', name: 'pillar2 - 2.4 Sharable Data', wp: 'WP01' },
+  { id: '3-1', code: '3.1', name: 'pillar3 - 3.1 Digital leadership', wp: 'WP07' },
+  { id: '3-2', code: '3.2', name: 'pillar3 - 3.2 Training and Development', wp: 'WP02' },
+  { id: '3-3', code: '3.3', name: 'pillar3 - 3.3 Digital Competency', wp: 'WP02' },
+  { id: '4-1', code: '4.1', name: 'pillar4 - 4.1 Service Provision', wp: 'WP03' },
+  { id: '4-2', code: '4.2', name: 'pillar4 - 4.2 Customer Experience', wp: 'WP03' },
+  { id: '4-3', code: '4.3', name: 'pillar4 - 4.3 Promotion for Digital Service Usage', wp: 'WP03' },
+  { id: '4-4', code: '4.4', name: 'pillar4 - 4.4 Public Participation', wp: 'WP08' },
+  { id: '5-1', code: '5.1', name: 'pillar5 - 5.1 Integrated enterprise', wp: 'WP04' },
+  { id: '5-2', code: '5.2', name: 'pillar5 - 5.2 Process Optimization', wp: 'WP04' },
+  { id: '6-1', code: '6.1', name: 'Pillar6 - 6.1 Reliable infrastructure', wp: 'WP06' },
+  { id: '6-2', code: '6.2', name: 'Pillar6 - 6.2 Cyber security', wp: 'WP06' },
+  { id: '7-1', code: '7.1', name: 'Pillar7 Digital Technology Practices', wp: 'WP05' }
+];
+
+const wps = [
+  { id: 'WP01', name: 'WP01: Data-Driven', group: 'Core', color: '#10b981', desc: 'รวบรวม 5 ข้อย่อย: นโยบาย, ธรรมาภิบาล, ความเป็นส่วนตัว, Open & Sharing' },
+  { id: 'WP02', name: 'WP02: Digital Workforce', group: 'Core', color: '#06b6d4', desc: 'ยกระดับทักษะและการพัฒนาความพร้อมดิจิทัลของบุคลากร' },
+  { id: 'WP03', name: 'WP03: Digital Service', group: 'Core', color: '#3b82f6', desc: 'พัฒนาบริการดิจิทัลประชาชน ประสบการณ์ผู้ใช้ และการส่งเสริมการใช้งาน' },
+  { id: 'WP04', name: 'WP04: Digital Workplace', group: 'Core', color: '#8b5cf6', desc: 'บูรณาการระบบทำงานภายใน ปรับปรุงกระบวนการทำงานให้เป็นดิจิทัล' },
+  { id: 'WP05', name: 'WP05: Emerging Tech', group: 'Core', color: '#ec4899', desc: 'ประยุกต์ใช้นวัตกรรมดิจิทัล เทคโนโลยีใหม่ และระบบอัตโนมัติ' },
+  { id: 'WP06', name: 'WP06: Cloud & Cyber', group: 'Optional', color: '#f59e0b', desc: 'ระบบโครงสร้างพื้นฐานที่มีเสถียรภาพ และความมั่นคงปลอดภัยไซเบอร์' },
+  { id: 'WP07', name: 'WP07: Digital Policy', group: 'Optional', color: '#eab308', desc: 'นโยบายดิจิทัล กลไกทางกฎหมาย และการเสริมสร้างภาวะผู้นำดิจิทัล' },
+  { id: 'WP08', name: 'WP08: Open Gov', group: 'Optional', color: '#f97316', desc: 'การมีส่วนร่วมของภาคประชาชนและช่องทางรับฟังความคิดเห็น' }
+];
+
+let isLight = false;
+let currentHighlight = null;
+
+function init() {
+  const dgContainer = document.getElementById('dgContainer');
+  const wpContainer = document.getElementById('wpContainer');
+
+  // Render DG Subpillars
+  items.forEach(item => {
+    const wpObj = wps.find(w => w.id === item.wp);
+    const div = document.createElement('div');
+    div.className = 'dg-item';
+    div.id = 'dg-' + item.id;
+    div.style.borderLeftColor = wpObj.color;
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span class="dg-code" style="background:${wpObj.color}22; color:${wpObj.color}">${item.wp}</span>
+    `;
+    
+    // Mouse hover
+    div.addEventListener('mouseenter', () => highlight('item', item.id));
+    div.addEventListener('mouseleave', clearHighlight);
+    // Touch tap for mobile/iPad
+    div.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentHighlight && currentHighlight.type === 'item' && currentHighlight.targetId === item.id) {
+        clearHighlight();
+      } else {
+        highlight('item', item.id);
+      }
+    });
+    dgContainer.appendChild(div);
+  });
+
+  // Render Work Packages
+  wps.forEach(wp => {
+    const isCore = wp.group === 'Core';
+    const div = document.createElement('div');
+    div.className = 'wp-card';
+    div.id = 'wp-' + wp.id;
+    div.style.borderLeftColor = wp.color;
+    div.innerHTML = `
+      <div class="wp-header">
+        <span class="wp-title" style="color:${wp.color}">${wp.name}</span>
+        <span class="wp-badge ${isCore ? 'badge-core' : 'badge-opt'}">${wp.group}</span>
+      </div>
+      <div class="wp-desc">${wp.desc}</div>
+    `;
+
+    // Mouse hover
+    div.addEventListener('mouseenter', () => highlight('wp', wp.id));
+    div.addEventListener('mouseleave', clearHighlight);
+    // Touch tap for mobile/iPad
+    div.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentHighlight && currentHighlight.type === 'wp' && currentHighlight.targetId === wp.id) {
+        clearHighlight();
+      } else {
+        highlight('wp', wp.id);
+      }
+    });
+    wpContainer.appendChild(div);
+  });
+
+  // Tap anywhere outside to dismiss highlight on touch screens
+  document.addEventListener('click', () => clearHighlight());
+
+  // Initial render & responsive fit
+  autoFitScale();
+  drawPaths();
+}
+
+// Auto-Fit scaling to fit any screen size (Computer, iPad, Mobile)
+function autoFitScale() {
+  const scaler = document.getElementById('stageScaler');
+  const stageWrapper = document.getElementById('stageWrapper');
+  const availableWidth = window.innerWidth - 32; // 16px padding on each side
+  const availableHeight = window.innerHeight - 110; // offset for toolbar/padding
+
+  const scaleX = availableWidth / 1280;
+  const scaleY = availableHeight / 720;
+  let scale = Math.min(scaleX, scaleY);
+
+  // Maximum scale 1 (no pixelation), minimum proportional for mobile
+  if (scale > 1) scale = 1;
+  if (scale < 0.25) scale = 0.25;
+
+  scaler.style.transform = `scale(${scale})`;
+  stageWrapper.style.height = `${720 * scale}px`;
+}
+
+function getCoords() {
+  const frame = document.getElementById('slideFrame');
+  const frameRect = frame.getBoundingClientRect();
+  const currentScale = frameRect.width / 1280 || 1;
+  const coords = [];
+
+  const wpCounts = {};
+  wps.forEach(w => wpCounts[w.id] = { current: 0, total: items.filter(i => i.wp === w.id).length });
+
+  items.forEach(item => {
+    const dgEl = document.getElementById('dg-' + item.id);
+    const wpEl = document.getElementById('wp-' + item.wp);
+    const wpObj = wps.find(w => w.id === item.wp);
+
+    const r1 = dgEl.getBoundingClientRect();
+    const r2 = wpEl.getBoundingClientRect();
+
+    // Normalize coordinates back to original 1280x720 canvas coordinate space
+    const x1 = (r1.right - frameRect.left) / currentScale;
+    const y1 = ((r1.top + r1.height / 2) - frameRect.top) / currentScale;
+
+    const countInfo = wpCounts[item.wp];
+    const total = countInfo.total;
+    const idx = countInfo.current;
+    countInfo.current++;
+
+    const x2 = (r2.left - frameRect.left) / currentScale;
+    const pad = 8;
+    const availH = (r2.height / currentScale) - (pad * 2);
+    const step = total > 1 ? availH / (total - 1) : 0;
+    const y2 = total > 1 
+      ? ((r2.top - frameRect.top) / currentScale) + pad + (idx * step)
+      : ((r2.top + r2.height / 2) - frameRect.top) / currentScale;
+
+    coords.push({ item, wpObj, x1, y1, x2, y2 });
+  });
+
+  return coords;
+}
+
+function drawPaths() {
+  const svg = document.getElementById('sankeySvg');
+  svg.innerHTML = '';
+  const coords = getCoords();
+
+  coords.forEach(({ item, wpObj, x1, y1, x2, y2 }) => {
+    const dx = (x2 - x1) * 0.52;
+    const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('class', 'sankey-path');
+    path.setAttribute('id', `path-${item.id}`);
+    path.setAttribute('stroke', wpObj.color);
+    path.setAttribute('stroke-width', '2.8');
+    path.setAttribute('stroke-opacity', '0.42');
+    svg.appendChild(path);
+  });
+}
+
+function highlight(type, targetId) {
+  currentHighlight = { type, targetId };
+
+  items.forEach(item => {
+    const dgEl = document.getElementById('dg-' + item.id);
+    const path = document.getElementById('path-' + item.id);
+    const isTarget = (type === 'item' && item.id === targetId) || (type === 'wp' && item.wp === targetId);
+
+    if (isTarget) {
+      dgEl.style.opacity = '1';
+      dgEl.classList.add('active');
+      if (path) {
+        path.setAttribute('stroke-opacity', '0.95');
+        path.setAttribute('stroke-width', '4.2');
+        path.parentNode.appendChild(path);
+      }
+    } else {
+      dgEl.style.opacity = '0.2';
+      dgEl.classList.remove('active');
+      if (path) {
+        path.setAttribute('stroke-opacity', '0.05');
+        path.setAttribute('stroke-width', '1.5');
+      }
+    }
+  });
+
+  wps.forEach(wp => {
+    const wpEl = document.getElementById('wp-' + wp.id);
+    const matchedItem = items.find(i => i.id === targetId);
+    const isTarget = (type === 'wp' && wp.id === targetId) || (type === 'item' && matchedItem && matchedItem.wp === wp.id);
+
+    if (isTarget) {
+      wpEl.style.opacity = '1';
+      wpEl.classList.add('active');
+    } else {
+      wpEl.style.opacity = '0.2';
+      wpEl.classList.remove('active');
+    }
+  });
+}
+
+function clearHighlight() {
+  currentHighlight = null;
+  items.forEach(item => {
+    const dgEl = document.getElementById('dg-' + item.id);
+    const path = document.getElementById('path-' + item.id);
+    dgEl.style.opacity = '1';
+    dgEl.classList.remove('active');
+    if (path) {
+      path.setAttribute('stroke-opacity', '0.42');
+      path.setAttribute('stroke-width', '2.8');
+    }
+  });
+
+  wps.forEach(wp => {
+    const wpEl = document.getElementById('wp-' + wp.id);
+    wpEl.style.opacity = '1';
+    wpEl.classList.remove('active');
+  });
+}
+
+function toggleTheme() {
+  isLight = !isLight;
+  const frame = document.getElementById('slideFrame');
+  frame.classList.toggle('light-theme', isLight);
+}
+
+// Full Native 1920x1080 High-Res Canvas Export
+function downloadImage() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1920;
+  canvas.height = 1080;
+  const ctx = canvas.getContext('2d');
+  const scale = 1920 / 1280;
+
+  // Background
+  ctx.fillStyle = isLight ? '#f8fafc' : '#0d1527';
+  ctx.fillRect(0, 0, 1920, 1080);
+
+  // Header Title
+  ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
+  ctx.font = 'bold ' + (20 * scale) + 'px -apple-system, sans-serif';
+  ctx.fillText('DG Survey Subpillars ➔ Work Packages Transformation', 32 * scale, 38 * scale);
+
+  ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+  ctx.font = (12 * scale) + 'px -apple-system, sans-serif';
+  ctx.fillText('โครงสร้างการจัดกลุ่มเกณฑ์ประเมินเดิมสู่แผนงานขับเคลื่อนองค์กรดิจิทัล (8 Work Packages)', 32 * scale, 58 * scale);
+
+  // Metrics Badges
+  ctx.fillStyle = isLight ? '#e2e8f0' : '#1e293b';
+  ctx.fillRect(920 * scale, 24 * scale, 160 * scale, 28 * scale);
+  ctx.fillRect(1090 * scale, 24 * scale, 158 * scale, 28 * scale);
+
+  ctx.fillStyle = '#10b981';
+  ctx.font = 'bold ' + (11.5 * scale) + 'px -apple-system, sans-serif';
+  ctx.fillText('Core Priority 65% (13 ข้อ)', 935 * scale, 42 * scale);
+
+  ctx.fillStyle = '#f59e0b';
+  ctx.fillText('Optional Priority 35% (7 ข้อ)', 1102 * scale, 42 * scale);
+
+  // Divider Line
+  ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1 * scale;
+  ctx.beginPath();
+  ctx.moveTo(32 * scale, 76 * scale);
+  ctx.lineTo(1248 * scale, 76 * scale);
+  ctx.stroke();
+
+  // Column Headers
+  ctx.font = 'bold ' + (11.5 * scale) + 'px -apple-system, sans-serif';
+  ctx.fillStyle = '#38bdf8';
+  ctx.fillText('DG SURVEY (20 SUBPILLARS)', 32 * scale, 98 * scale);
+  ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+  ctx.fillText('PILLAR 1 - 7', 280 * scale, 98 * scale);
+
+  ctx.fillStyle = '#34d399';
+  ctx.fillText('WORK PACKAGES (WP01 - WP08)', 908 * scale, 98 * scale);
+  ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+  ctx.fillText('PRIORITY GROUP', 1145 * scale, 98 * scale);
+
+  const coords = getCoords();
+
+  // 1. Draw Bezier Paths
+  coords.forEach(({ wpObj, x1, y1, x2, y2 }) => {
+    const sx1 = x1 * scale;
+    const sy1 = y1 * scale;
+    const sx2 = x2 * scale;
+    const sy2 = y2 * scale;
+    const dx = (sx2 - sx1) * 0.52;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(sx1, sy1);
+    ctx.bezierCurveTo(sx1 + dx, sy1, sx2 - dx, sy2, sx2, sy2);
+    ctx.strokeStyle = wpObj.color;
+    ctx.lineWidth = 3 * scale;
+    ctx.globalAlpha = 0.45;
+    ctx.stroke();
+    ctx.restore();
+  });
+
+  const frame = document.getElementById('slideFrame');
+  const frameRect = frame.getBoundingClientRect();
+  const currentScale = frameRect.width / 1280 || 1;
+
+  // 2. Draw DG Subpillars on Left
+  items.forEach(item => {
+    const el = document.getElementById('dg-' + item.id);
+    const r = el.getBoundingClientRect();
+    const x = ((r.left - frameRect.left) / currentScale) * scale;
+    const y = ((r.top - frameRect.top) / currentScale) * scale;
+    const w = (r.width / currentScale) * scale;
+    const h = (r.height / currentScale) * scale;
+    const wpObj = wps.find(wp => wp.id === item.wp);
+
+    ctx.fillStyle = isLight ? '#ffffff' : '#162032';
+    ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = wpObj.color;
+    ctx.fillRect(x, y, 5 * scale, h);
+
+    ctx.fillStyle = isLight ? '#1e293b' : '#cbd5e1';
+    ctx.font = '500 ' + (10.5 * scale) + 'px -apple-system, sans-serif';
+    ctx.fillText(item.name, x + (10 * scale), y + h * 0.68);
+
+    ctx.fillStyle = wpObj.color;
+    ctx.font = 'bold ' + (9.5 * scale) + 'px -apple-system, sans-serif';
+    ctx.fillText(item.wp, x + w - (38 * scale), y + h * 0.68);
+  });
+
+  // 3. Draw WP Cards on Right
+  wps.forEach(wp => {
+    const el = document.getElementById('wp-' + wp.id);
+    const r = el.getBoundingClientRect();
+    const x = ((r.left - frameRect.left) / currentScale) * scale;
+    const y = ((r.top - frameRect.top) / currentScale) * scale;
+    const w = (r.width / currentScale) * scale;
+    const h = (r.height / currentScale) * scale;
+
+    ctx.fillStyle = isLight ? '#ffffff' : '#162032';
+    ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = wp.color;
+    ctx.fillRect(x, y, 6 * scale, h);
+
+    ctx.font = 'bold ' + (12 * scale) + 'px -apple-system, sans-serif';
+    ctx.fillText(wp.name, x + (12 * scale), y + (16 * scale));
+
+    ctx.font = 'bold ' + (9 * scale) + 'px -apple-system, sans-serif';
+    ctx.fillText(wp.group.toUpperCase(), x + w - (48 * scale), y + (16 * scale));
+
+    ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+    ctx.font = (9.5 * scale) + 'px -apple-system, sans-serif';
+    ctx.fillText(wp.desc, x + (12 * scale), y + (34 * scale));
+  });
+
+  // Footer
+  ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+  ctx.beginPath();
+  ctx.moveTo(32 * scale, 685 * scale);
+  ctx.lineTo(1248 * scale, 685 * scale);
+  ctx.stroke();
+
+  ctx.fillStyle = isLight ? '#94a3b8' : '#64748b';
+  ctx.font = (11 * scale) + 'px -apple-system, sans-serif';
+  ctx.fillText('สถาปัตยกรรมมาตรการยกระดับ DG Transformation • 16:9 Presentation', 32 * scale, 706 * scale);
+  ctx.fillText('สรุปข้อมูล: รวมเรื่อง Data เป็น WP01 และรวมความมั่นคงโครงสร้างพื้นฐานเป็น WP06', 770 * scale, 706 * scale);
+
+  const link = document.createElement('a');
+  link.download = `DG_to_WP_Executive_16x9_${isLight ? 'Light' : 'Dark'}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+window.addEventListener('resize', () => {
+  autoFitScale();
+  drawPaths();
+});
+
+window.onload = init;
+</script>
+</body>
+</html>
