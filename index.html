@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DG Survey to Work Package - 16:9 Executive Sankey Diagram</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Prompt & Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- html2canvas for instant PPT PNG export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Prompt"', '"Sarabun"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Prompt', 'Sarabun', sans-serif;
+    }
+    .sankey-ribbon {
+      transition: fill-opacity 0.25s ease, stroke-opacity 0.25s ease, stroke-width 0.25s ease;
+      cursor: pointer;
+    }
+    .sankey-ribbon:hover {
+      fill-opacity: 0.75 !important;
+      stroke-opacity: 0.9 !important;
+    }
+    .node-box {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .node-box:hover {
+      transform: translateX(2px);
+    }
+    /* Toast animation */
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .toast-anim {
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <header class="bg-slate-950/80 border-b border-slate-800 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-indigo-900/40">
+          <i data-lucide="git-merge" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm sm:text-base font-bold text-white tracking-tight">DG Survey &rarr; Work Package (Sankey Flow)</h1>
+            <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full">16:9 PPT Ready</span>
+          </div>
+          <p class="text-xs text-slate-400 hidden sm:block">แผนภาพจำลองกระแสการจัดกลุ่มใหม่ (Re-clustering) จาก 20 Subpillars สู่ 8 โครงการขับเคลื่อน</p>
+        </div>
+      </div>
+
+      <!-- Action & Export Controls -->
+      <div class="flex items-center gap-2">
+        <!-- Theme Toggle -->
+        <button id="btn-toggle-theme" onclick="toggleSlideTheme()" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium flex items-center gap-1.5 transition">
+          <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400" id="theme-icon"></i>
+          <span id="theme-label">ธีมสไลด์สว่าง (Light)</span>
+        </button>
+
+        <!-- Color Mode -->
+        <button onclick="toggleColorMode()" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium flex items-center gap-1.5 transition">
+          <i data-lucide="palette" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span id="color-mode-label">แยกสีตาม WP</span>
+        </button>
+
+        <!-- Export PPT Image -->
+        <button onclick="exportSlidePNG()" id="btn-export" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-emerald-950/50 transition active:scale-95">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>บันทึกภาพลง PPT (1080p)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-[1600px] w-full mx-auto px-2 sm:px-4 py-4 flex flex-col items-center justify-center">
+
+    <!-- Quick Tip Bar -->
+    <div class="w-full max-w-[1400px] flex items-center justify-between text-xs text-slate-400 mb-2 px-1">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>สัดส่วนภาพสไลด์ 16:9 มาตรฐาน (1920x1080) คลิกปุ่มเขียวขวาบนเพื่อดาวน์โหลดภาพไปวางใน PowerPoint</span>
+      </div>
+      <div class="flex items-center gap-3 text-slate-400">
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-emerald-500 inline-block"></span> Core Priority (WP01 - WP05)</span>
+        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded bg-amber-500 inline-block"></span> Optional Priority (WP06 - WP08)</span>
+      </div>
+    </div>
+
+    <!-- 16:9 PRESENTATION CANVAS CONTAINER -->
+    <div class="w-full max-w-[1400px] shadow-2xl rounded-2xl overflow-hidden border border-slate-700/80 bg-slate-950">
+      
+      <!-- Slide Aspect Ratio Box (16:9) -->
+      <div id="ppt-slide-card" class="relative w-full aspect-[16/9] min-h-[640px] bg-slate-950 text-slate-100 flex flex-col justify-between p-6 sm:p-8 select-none transition-colors duration-300">
+        
+        <div class="flex items-start justify-between border-b border-slate-800/80 pb-4 mb-2 z-20">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2.5">
+              <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold tracking-wider uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                Strategic Alignment Map
+              </span>
+              <span class="text-xs text-slate-400">|</span>
+              <span class="text-xs text-slate-400 font-medium">สถาปัตยกรรมมาตรการขับเคลื่อนองค์กรสู่ดิจิทัล</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white slide-title">
+              การจัดโครงสร้างเกณฑ์ DG Survey สู่ 8 ชุดโครงการขับเคลื่อน (Work Packages)
+            </h2>
+          </div>
+
+          <!-- Summary Metric Pills -->
+          <div class="flex items-center gap-3">
+            <div class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-right">
+              <div class="text-[10px] text-slate-400 uppercase font-bold">DG Subpillars</div>
+              <div class="text-base font-extrabold text-indigo-400">20 ข้อประเมิน</div>
+            </div>
+            <div class="text-slate-600 font-black text-lg">&rarr;</div>
+            <div class="px-3 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-right">
+              <div class="text-[10px] text-emerald-400 uppercase font-bold">5 Core WP</div>
+              <div class="text-base font-extrabold text-emerald-300">13 ข้อ (65%)</div>
+            </div>
+            <div class="px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-800/60 text-right">
+              <div class="text-[10px] text-amber-400 uppercase font-bold">3 Optional WP</div>
+              <div class="text-base font-extrabold text-amber-300">7 ข้อ (35%)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative flex-1 grid grid-cols-12 gap-0 my-1 items-stretch z-20">
+          
+          <!-- LEFT COLUMN: DG Survey (Subpillars) -->
+          <div class="col-span-4 flex flex-col justify-between pr-4 py-1 z-30" id="left-subpillars-col">
+            <div class="flex items-center justify-between pb-1.5 mb-1 border-b border-slate-800 text-xs font-bold text-slate-300">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="list-checks" class="w-3.5 h-3.5 text-indigo-400"></i>
+                เกณฑ์ประเมินเดิม (DG Survey: 20 Subpillars)
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">7 Pillars</span>
+            </div>
+            <div id="subpillars-list" class="flex flex-col justify-between h-[calc(100%-28px)] space-y-1">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- MIDDLE COLUMN: Sankey Flow SVG Ribbon Canvas -->
+          <div class="col-span-4 relative flex items-center justify-center px-1" id="sankey-middle-container">
+            <!-- Center watermark badge -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15">
+              <div class="text-center">
+                <i data-lucide="arrow-right-left" class="w-16 h-16 mx-auto text-indigo-400 stroke-1"></i>
+                <span class="text-[11px] font-mono tracking-widest uppercase">Stream Re-clustering</span>
+              </div>
+            </div>
+            
+            <svg id="sankey-svg" class="w-full h-full absolute inset-0 pointer-events-auto" style="overflow: visible;"></svg>
+          </div>
+
+          <!-- RIGHT COLUMN: Work Packages (8 WPs divided into Core and Optional) -->
+          <div class="col-span-4 flex flex-col justify-between pl-4 py-1 z-30" id="right-wp-col">
+            <div class="flex items-center justify-between pb-1.5 mb-1 border-b border-slate-800 text-xs font-bold text-slate-300">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-emerald-400"></i>
+                ชุดโครงการปฏิบัติการ (Work Packages: WP01 - WP08)
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-700/60 text-emerald-300 font-bold">
+                8 Packages
+              </span>
+            </div>
+            <div id="wp-list" class="flex flex-col justify-between h-[calc(100%-28px)] space-y-1.5">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </div>
+
+        <div class="border-t border-slate-800/80 pt-3 mt-2 flex items-center justify-between text-xs z-20">
+          <div class="flex items-center gap-3 text-slate-400">
+            <span class="inline-flex items-center gap-1 font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
+              <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i> Executive Insight:
+            </span>
+            <span class="text-[11px] text-slate-300 slide-takeaway">
+              รวมงานข้อมูล 5 ข้อย่อยเป็น <strong>WP01 (Data-Driven)</strong> และรวบไซเบอร์กับระบบโครงสร้างพื้นฐานเป็น <strong>WP06 (Cloud & Cyber)</strong> เพื่อให้เจ้าภาพรับผิดชอบเบ็ดเสร็จ
+            </span>
+          </div>
+
+          <div class="text-[11px] text-slate-500 font-medium">
+            Digital Transformation Strategic Architecture &bull; 16:9 Presentation Format
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Instructions / Presentation Helper -->
+    <div class="w-full max-w-[1400px] mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-400">
+      <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl space-y-1">
+        <div class="text-white font-bold flex items-center gap-1.5">
+          <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-indigo-400"></i> Interactive Highlight
+        </div>
+        <p>นำเมาส์ไปชี้ที่ข้อประเมิน (DG) หรือ Work Package เพื่อไฮไลต์เฉพาะเส้นทางการไหลของกลุ่มงานนั้นแบบชัดเจน</p>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl space-y-1">
+        <div class="text-white font-bold flex items-center gap-1.5">
+          <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i> One-Click PPT Export
+        </div>
+        <p>กดปุ่ม "บันทึกภาพลง PPT" ระบบจะจับภาพอัตราส่วน 16:9 คมชัดระดับ 1920x1080 ให้เปิดใน PowerPoint ได้ทันที</p>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-xl space-y-1">
+        <div class="text-white font-bold flex items-center gap-1.5">
+          <i data-lucide="sun-moon" class="w-3.5 h-3.5 text-amber-400"></i> ธีมสไลด์ Light / Dark
+        </div>
+        <p>สามารถสลับเป็นพื้นหลังสีขาว (Light Mode) หรือสีเข้ม (Dark Mode) ให้เข้ากับ Template ขององค์กรได้ก่อนกดดาวน์โหลด</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Notification Toast Container -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden bg-slate-900 text-white border border-slate-700 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs">
+    <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+    <span id="toast-msg">กำลังบันทึกภาพ...</span>
+  </div>
+
+  <script>
+    // 20 Subpillars mapped precisely to 8 Work Packages
+    const rawData = [
+      { id: '1-1', code: '1.1', name: '1.1 Digital policy', pillar: 'Pillar 1', wpId: 'WP07' },
+      { id: '1-2', code: '1.2', name: '1.2 Cyber Security Policy', pillar: 'Pillar 1', wpId: 'WP06' },
+      { id: '1-3', code: '1.3', name: '1.3 Legal & Regulatory Mechanism', pillar: 'Pillar 1', wpId: 'WP07' },
+      { id: '1-4', code: '1.4', name: '1.4 Data Policy', pillar: 'Pillar 1', wpId: 'WP01' },
+
+      { id: '2-1', code: '2.1', name: '2.1 Data Governance', pillar: 'Pillar 2', wpId: 'WP01' },
+      { id: '2-2', code: '2.2', name: '2.2 Data Privacy', pillar: 'Pillar 2', wpId: 'WP01' },
+      { id: '2-3', code: '2.3', name: '2.3 Open Data', pillar: 'Pillar 2', wpId: 'WP01' },
+      { id: '2-4', code: '2.4', name: '2.4 Sharable Data', pillar: 'Pillar 2', wpId: 'WP01' },
+
+      { id: '3-1', code: '3.1', name: '3.1 Digital leadership', pillar: 'Pillar 3', wpId: 'WP07' },
+      { id: '3-2', code: '3.2', name: '3.2 Training and Development', pillar: 'Pillar 3', wpId: 'WP02' },
+      { id: '3-3', code: '3.3', name: '3.3 Digital Competency', pillar: 'Pillar 3', wpId: 'WP02' },
+
+      { id: '4-1', code: '4.1', name: '4.1 Service Provision', pillar: 'Pillar 4', wpId: 'WP03' },
+      { id: '4-2', code: '4.2', name: '4.2 Customer Experience', pillar: 'Pillar 4', wpId: 'WP03' },
+      { id: '4-3', code: '4.3', name: '4.3 Promotion for Digital Service Usage', pillar: 'Pillar 4', wpId: 'WP03' },
+      { id: '4-4', code: '4.4', name: '4.4 Public Participation', pillar: 'Pillar 4', wpId: 'WP08' },
+
+      { id: '5-1', code: '5.1', name: '5.1 Integrated enterprise', pillar: 'Pillar 5', wpId: 'WP04' },
+      { id: '5-2', code: '5.2', name: '5.2 Process Optimization', pillar: 'Pillar 5', wpId: 'WP04' },
+
+      { id: '6-1', code: '6.1', name: '6.1 Reliable infrastructure', pillar: 'Pillar 6', wpId: 'WP06' },
+      { id: '6-2', code: '6.2', name: '6.2 Cyber security', pillar: 'Pillar 6', wpId: 'WP06' },
+
+      { id: '7-1', code: '7.1', name: 'Pillar7 Digital Technology Practices', pillar: 'Pillar 7', wpId: 'WP05' }
+    ];
+
+    // 8 Work Packages Definitions
+    const wpData = [
+      { id: 'WP01', name: 'Data-Driven', group: 'Core Priority', desc: 'รวบรวม 5 ด้านข้อมูล: นโยบาย, ธรรมาภิบาล, ความเป็นส่วนตัว, Open Data, Data Sharing', color: '#10b981', border: '#059669', badgeBg: 'bg-emerald-500' },
+      { id: 'WP02', name: 'Digital Workforce', group: 'Core Priority', desc: 'พัฒนาทักษะและการฝึกอบรมความพร้อมดิจิทัลของบุคลากร (Training & Competency)', color: '#06b6d4', border: '#0891b2', badgeBg: 'bg-cyan-500' },
+      { id: 'WP03', name: 'Digital Service', group: 'Core Priority', desc: 'บริการดิจิทัลประชาชน ประสบการณ์ผู้ใช้ และการส่งเสริมการใช้งาน (E-Service & UX)', color: '#3b82f6', border: '#2563eb', badgeBg: 'bg-blue-500' },
+      { id: 'WP04', name: 'Digital Workplace', group: 'Core Priority', desc: 'บูรณาการระบบงานภายใน ปรับกระบวนการทำงานให้เป็นดิจิทัลไร้กระดาษ (Optimization)', color: '#8b5cf6', border: '#7c3aed', badgeBg: 'bg-purple-500' },
+      { id: 'WP05', name: 'Emerging Tech', group: 'Core Priority', desc: 'การประยุกต์ใช้เทคโนโลยีปัญญาประดิษฐ์และนวัตกรรมใหม่ (AI, Cloud, Automation)', color: '#ec4899', border: '#db2777', badgeBg: 'bg-pink-500' },
+
+      { id: 'WP06', name: 'Cloud & Cyber', group: 'Optional Priority', desc: 'โครงสร้างพื้นฐานที่มีเสถียรภาพและนโยบายความมั่นคงปลอดภัยไซเบอร์ (Infrastructure & Security)', color: '#f59e0b', border: '#d97706', badgeBg: 'bg-amber-500' },
+      { id: 'WP07', name: 'Digital Policy', group: 'Optional Priority', desc: 'นโยบายดิจิทัล กลไกทางกฎหมาย และการพัฒนาผู้นำดิจิทัล (Policy & Leadership)', color: '#eab308', border: '#ca8a04', badgeBg: 'bg-yellow-500' },
+      { id: 'WP08', name: 'Open Gov', group: 'Optional Priority', desc: 'การเปิดรับฟังความคิดเห็นและการมีส่วนร่วมของภาคประชาชน (Citizen Engagement)', color: '#f97316', border: '#ea580c', badgeBg: 'bg-orange-500' }
+    ];
+
+    let isLightMode = false;
+    let colorByWP = true;
+    let activeHighlight = null;
+
+    function renderNodes() {
+      const subContainer = document.getElementById('subpillars-list');
+      const wpContainer = document.getElementById('wp-list');
+      subContainer.innerHTML = '';
+      wpContainer.innerHTML = '';
+
+      // Render 20 Subpillars on the Left
+      rawData.forEach((item, index) => {
+        const targetWP = wpData.find(w => w.id === item.wpId);
+        const node = document.createElement('div');
+        node.id = `node-sub-${item.id}`;
+        node.className = `node-box relative group flex items-center justify-between px-2.5 py-1 rounded-md text-[11px] font-medium border cursor-pointer transition-all duration-150 ${
+          isLightMode 
+            ? 'bg-white border-slate-200 text-slate-800 shadow-2xs hover:border-indigo-400' 
+            : 'bg-slate-900/90 border-slate-800 text-slate-200 hover:border-indigo-400'
+        }`;
+        node.setAttribute('data-wpid', item.wpId);
+        node.setAttribute('data-subid', item.id);
+
+        node.innerHTML = `
+          <div class="flex items-center gap-1.5 truncate pr-1">
+            <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background-color: ${targetWP.color}"></span>
+            <span class="truncate font-medium">${item.name}</span>
+          </div>
+          <span class="shrink-0 text-[10px] px-1.5 py-0.2 rounded font-mono font-bold ${
+            targetWP.group === 'Core Priority' 
+              ? (isLightMode ? 'bg-emerald-100 text-emerald-800' : 'bg-emerald-950/80 text-emerald-300 border border-emerald-800/50') 
+              : (isLightMode ? 'bg-amber-100 text-amber-800' : 'bg-amber-950/80 text-amber-300 border border-amber-800/50')
+          }">
+            ${item.wpId}
+          </span>
+        `;
+
+        node.addEventListener('mouseenter', () => highlightFlow(item.id, 'sub'));
+        node.addEventListener('mouseleave', clearHighlight);
+        subContainer.appendChild(node);
+      });
+
+      // Render 8 Work Packages on the Right (Grouped clearly: 5 Core, 3 Optional)
+      wpData.forEach((wp, index) => {
+        const relatedSubpillars = rawData.filter(d => d.wpId === wp.id);
+        const isCore = wp.group === 'Core Priority';
+
+        const node = document.createElement('div');
+        node.id = `node-wp-${wp.id}`;
+        node.className = `node-box relative group flex items-start justify-between p-2 rounded-lg border cursor-pointer transition-all duration-150 ${
+          isLightMode 
+            ? (isCore ? 'bg-emerald-50/40 border-emerald-200 hover:border-emerald-500' : 'bg-amber-50/40 border-amber-200 hover:border-amber-500')
+            : (isCore ? 'bg-slate-900/95 border-emerald-900/40 hover:border-emerald-500' : 'bg-slate-900/95 border-amber-900/40 hover:border-amber-500')
+        }`;
+        node.setAttribute('data-wpid', wp.id);
+
+        node.innerHTML = `
+          <div class="flex items-start gap-2 max-w-[78%]">
+            <span class="shrink-0 text-[10px] font-mono font-black px-1.5 py-0.5 rounded text-white shadow-2xs" style="background-color: ${wp.color}">
+              ${wp.id}
+            </span>
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-1.5">
+                <h4 class="text-xs font-bold leading-tight ${isLightMode ? 'text-slate-900' : 'text-white'} group-hover:text-indigo-400 transition">${wp.name}</h4>
+                <span class="text-[9px] px-1 py-0.2 rounded font-semibold ${
+                  isCore 
+                    ? (isLightMode ? 'bg-emerald-100 text-emerald-800' : 'bg-emerald-500/20 text-emerald-300') 
+                    : (isLightMode ? 'bg-amber-100 text-amber-800' : 'bg-amber-500/20 text-amber-300')
+                }">
+                  ${isCore ? 'Core' : 'Optional'}
+                </span>
+              </div>
+              <p class="text-[10px] leading-snug line-clamp-1 ${isLightMode ? 'text-slate-500' : 'text-slate-400'}">${wp.desc}</p>
+            </div>
+          </div>
+          <div class="shrink-0 text-right">
+            <span class="text-xs font-extrabold ${isLightMode ? 'text-slate-800' : 'text-slate-200'} bg-slate-800/10 px-1.5 py-0.5 rounded-md">
+              ${relatedSubpillars.length} <span class="text-[9px] font-normal text-slate-400">ข้อ</span>
+            </span>
+          </div>
+        `;
+
+        node.addEventListener('mouseenter', () => highlightFlow(wp.id, 'wp'));
+        node.addEventListener('mouseleave', clearHighlight);
+        wpContainer.appendChild(node);
+      });
+
+      // Update Lucide icons
+      lucide.createIcons();
+
+      // Redraw SVG Ribbons
+      requestAnimationFrame(drawSankeyFlows);
+    }
+
+    function drawSankeyFlows() {
+      const svg = document.getElementById('sankey-svg');
+      if (!svg) return;
+      svg.innerHTML = '';
+
+      const svgRect = svg.getBoundingClientRect();
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      svg.appendChild(defs);
+
+      // Track slot height for each WP to stack incoming connections nicely
+      const wpSlots = {};
+      wpData.forEach(wp => {
+        wpSlots[wp.id] = { currentOffset: 0, total: rawData.filter(d => d.wpId === wp.id).length };
+      });
+
+      rawData.forEach((item, i) => {
+        const leftEl = document.getElementById(`node-sub-${item.id}`);
+        const rightEl = document.getElementById(`node-wp-${item.wpId}`);
+        const targetWP = wpData.find(w => w.id === item.wpId);
+
+        if (!leftEl || !rightEl) return;
+
+        const leftRect = leftEl.getBoundingClientRect();
+        const rightRect = rightEl.getBoundingClientRect();
+
+        // Calculate positions relative to SVG canvas
+        const x0 = 0;
+        const y0 = leftRect.top + leftRect.height / 2 - svgRect.top;
+        const h0 = Math.max(3, leftRect.height * 0.45);
+
+        const x1 = svgRect.width;
+        // Distribute within target WP node height
+        const totalItemsInWP = wpSlots[item.wpId].total;
+        const itemIdx = wpSlots[item.wpId].currentOffset;
+        wpSlots[item.wpId].currentOffset += 1;
+
+        const padding = 6;
+        const availableHeight = rightRect.height - (padding * 2);
+        const step = totalItemsInWP > 1 ? availableHeight / (totalItemsInWP - 1) : 0;
+        const y1Center = totalItemsInWP > 1 
+          ? (rightRect.top - svgRect.top + padding + itemIdx * step)
+          : (rightRect.top + rightRect.height / 2 - svgRect.top);
+        const h1 = Math.max(4, Math.min(10, availableHeight / totalItemsInWP));
+
+        // Create linearGradient for each flow ribbon
+        const gradId = `grad-${item.id}-${item.wpId}`;
+        const grad = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        grad.setAttribute('id', gradId);
+        grad.setAttribute('x1', '0%');
+        grad.setAttribute('y1', '0%');
+        grad.setAttribute('x2', '100%');
+        grad.setAttribute('y2', '0%');
+
+        const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        stop1.setAttribute('offset', '0%');
+        stop1.setAttribute('stop-color', targetWP.color);
+        stop1.setAttribute('stop-opacity', '0.7');
+
+        const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        stop2.setAttribute('offset', '100%');
+        stop2.setAttribute('stop-color', targetWP.color);
+        stop2.setAttribute('stop-opacity', '0.9');
+
+        grad.appendChild(stop1);
+        grad.appendChild(stop2);
+        defs.appendChild(grad);
+
+        // Calculate Smooth Cubic Bezier Sankey Path (Curved ribbon polygon)
+        const dx = (x1 - x0) * 0.52;
+        const topPath = `M ${x0} ${y0 - h0 / 2} C ${x0 + dx} ${y0 - h0 / 2}, ${x1 - dx} ${y1Center - h1 / 2}, ${x1} ${y1Center - h1 / 2}`;
+        const bottomPath = `L ${x1} ${y1Center + h1 / 2} C ${x1 - dx} ${y1Center + h1 / 2}, ${x0 + dx} ${y0 + h0 / 2}, ${x0} ${y0 + h0 / 2} Z`;
+        const pathData = `${topPath} ${bottomPath}`;
+
+        const ribbon = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        ribbon.setAttribute('d', pathData);
+        ribbon.setAttribute('fill', `url(#${gradId})`);
+        ribbon.setAttribute('fill-opacity', isLightMode ? '0.28' : '0.35');
+        ribbon.setAttribute('stroke', targetWP.color);
+        ribbon.setAttribute('stroke-width', '0.5');
+        ribbon.setAttribute('stroke-opacity', '0.5');
+        ribbon.setAttribute('class', 'sankey-ribbon');
+        ribbon.setAttribute('id', `ribbon-${item.id}`);
+        ribbon.setAttribute('data-subid', item.id);
+        ribbon.setAttribute('data-wpid', item.wpId);
+
+        ribbon.addEventListener('mouseenter', () => highlightFlow(item.id, 'sub'));
+        ribbon.addEventListener('mouseleave', clearHighlight);
+
+        svg.appendChild(ribbon);
+      });
+    }
+
+    function highlightFlow(id, type) {
+      activeHighlight = { id, type };
+      const ribbons = document.querySelectorAll('.sankey-ribbon');
+      const subNodes = document.querySelectorAll('#subpillars-list .node-box');
+      const wpNodes = document.querySelectorAll('#wp-list .node-box');
+
+      let targetWpIds = new Set();
+      let targetSubIds = new Set();
+
+      if (type === 'sub') {
+        targetSubIds.add(id);
+        const item = rawData.find(d => d.id === id);
+        if (item) targetWpIds.add(item.wpId);
+      } else if (type === 'wp') {
+        targetWpIds.add(id);
+        rawData.filter(d => d.wpId === id).forEach(d => targetSubIds.add(d.id));
+      }
+
+      // Update Ribbons
+      ribbons.forEach(ribbon => {
+        const sId = ribbon.getAttribute('data-subid');
+        const wId = ribbon.getAttribute('data-wpid');
+        const isMatched = (type === 'sub' && sId === id) || (type === 'wp' && wId === id);
+
+        if (isMatched) {
+          ribbon.setAttribute('fill-opacity', '0.85');
+          ribbon.setAttribute('stroke-opacity', '1');
+          ribbon.setAttribute('stroke-width', '1.5');
+          ribbon.parentNode.appendChild(ribbon); // Bring to front
+        } else {
+          ribbon.setAttribute('fill-opacity', '0.04');
+          ribbon.setAttribute('stroke-opacity', '0.05');
+          ribbon.setAttribute('stroke-width', '0.2');
+        }
+      });
+
+      // Update Subpillar nodes
+      subNodes.forEach(node => {
+        const sId = node.getAttribute('data-subid');
+        if (targetSubIds.has(sId)) {
+          node.style.opacity = '1';
+          node.style.transform = 'scale(1.02)';
+          node.classList.add('ring-2', 'ring-indigo-400');
+        } else {
+          node.style.opacity = '0.25';
+          node.style.transform = 'scale(1)';
+          node.classList.remove('ring-2', 'ring-indigo-400');
+        }
+      });
+
+      // Update WP nodes
+      wpNodes.forEach(node => {
+        const wId = node.getAttribute('data-wpid');
+        if (targetWpIds.has(wId)) {
+          node.style.opacity = '1';
+          node.style.transform = 'scale(1.02)';
+          node.classList.add('ring-2', 'ring-indigo-400');
+        } else {
+          node.style.opacity = '0.25';
+          node.style.transform = 'scale(1)';
+          node.classList.remove('ring-2', 'ring-indigo-400');
+        }
+      });
+    }
+
+    function clearHighlight() {
+      activeHighlight = null;
+      const ribbons = document.querySelectorAll('.sankey-ribbon');
+      const subNodes = document.querySelectorAll('#subpillars-list .node-box');
+      const wpNodes = document.querySelectorAll('#wp-list .node-box');
+
+      ribbons.forEach(ribbon => {
+        ribbon.setAttribute('fill-opacity', isLightMode ? '0.28' : '0.35');
+        ribbon.setAttribute('stroke-opacity', '0.5');
+        ribbon.setAttribute('stroke-width', '0.5');
+      });
+
+      subNodes.forEach(node => {
+        node.style.opacity = '1';
+        node.style.transform = 'scale(1)';
+        node.classList.remove('ring-2', 'ring-indigo-400');
+      });
+
+      wpNodes.forEach(node => {
+        node.style.opacity = '1';
+        node.style.transform = 'scale(1)';
+        node.classList.remove('ring-2', 'ring-indigo-400');
+      });
+    }
+
+    function toggleSlideTheme() {
+      isLightMode = !isLightMode;
+      const slideCard = document.getElementById('ppt-slide-card');
+      const themeIcon = document.getElementById('theme-icon');
+      const themeLabel = document.getElementById('theme-label');
+
+      if (isLightMode) {
+        slideCard.classList.remove('bg-slate-950', 'text-slate-100');
+        slideCard.classList.add('bg-slate-50', 'text-slate-900');
+        
+        slideCard.querySelector('.slide-title').classList.remove('text-white');
+        slideCard.querySelector('.slide-title').classList.add('text-slate-950');
+
+        themeIcon.setAttribute('data-lucide', 'moon');
+        themeLabel.textContent = 'ธีมสไลด์เข้ม (Dark)';
+      } else {
+        slideCard.classList.remove('bg-slate-50', 'text-slate-900');
+        slideCard.classList.add('bg-slate-950', 'text-slate-100');
+
+        slideCard.querySelector('.slide-title').classList.remove('text-slate-950');
+        slideCard.querySelector('.slide-title').classList.add('text-white');
+
+        themeIcon.setAttribute('data-lucide', 'sun');
+        themeLabel.textContent = 'ธีมสไลด์สว่าง (Light)';
+      }
+
+      renderNodes();
+    }
+
+    function toggleColorMode() {
+      colorByWP = !colorByWP;
+      const label = document.getElementById('color-mode-label');
+      label.textContent = colorByWP ? 'แยกสีตาม WP' : 'แยกสีตาม Priority';
+
+      wpData.forEach(wp => {
+        if (!colorByWP) {
+          wp.color = wp.group === 'Core Priority' ? '#10b981' : '#f59e0b';
+        } else {
+          // Restore WP colors
+          const orig = {
+            WP01: '#10b981', WP02: '#06b6d4', WP03: '#3b82f6', WP04: '#8b5cf6',
+            WP05: '#ec4899', WP06: '#f59e0b', WP07: '#eab308', WP08: '#f97316'
+          };
+          wp.color = orig[wp.id];
+        }
+      });
+
+      renderNodes();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('toast-anim');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    async function exportSlidePNG() {
+      const btn = document.getElementById('btn-export');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> กำลังเรนเดอร์ภาพ...`;
+      lucide.createIcons();
+      showToast('กำลังสร้างภาพ 1920x1080 Full HD สำหรับใส่สไลด์ PPT...');
+
+      const slide = document.getElementById('ppt-slide-card');
+
+      try {
+        // Render crisp canvas at 2x scale for true PowerPoint 1080p quality
+        const canvas = await html2canvas(slide, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: isLightMode ? '#f8fafc' : '#020617',
+          windowWidth: 1920,
+          windowHeight: 1080
+        });
+
+        // Trigger instant download
+        const imageURL = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = imageURL;
+        downloadLink.download = `DG_Survey_to_WP_Sankey_16x9_${isLightMode ? 'Light' : 'Dark'}.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        showToast('ดาวน์โหลดรูปภาพสำเร็จ! พร้อมนำไปวางใน PowerPoint (Ctrl+V) ได้เลย');
+      } catch (err) {
+        console.error('Export error:', err);
+        showToast('ไม่สามารถบันทึกภาพอัตโนมัติได้ สามารถใช้ปุ่ม Print Screen หรือ Snipping Tool ได้ทันที');
+      } finally {
+        btn.innerHTML = originalText;
+        lucide.createIcons();
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      drawSankeyFlows();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderNodes();
+    });
+  </script>
+</body>
+</html>
