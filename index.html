@@ -1,764 +1,693 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>DG Survey to Work Package - Executive Presentation (16:9)</title>
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DG Survey to Work Package Executive Mapping</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% 15%, #0f172a 0%, #090d16 100%);
+      --card-bg: rgba(22, 32, 50, 0.85);
+      --card-border: rgba(148, 163, 184, 0.12);
+      --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
+      --panel-bg: rgba(15, 23, 42, 0.75);
+      --header-bg: rgba(15, 23, 42, 0.85);
+      --badge-border: rgba(255, 255, 255, 0.08);
+      --shadow-color: rgba(0, 0, 0, 0.45);
+    }
 
-  html, body {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #0b1120;
-    color: #f1f5f9;
-  }
+    body.light-theme {
+      --bg-gradient: radial-gradient(circle at 50% 15%, #f8fafc 0%, #e2e8f0 100%);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(203, 213, 225, 0.8);
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --panel-bg: rgba(255, 255, 255, 0.8);
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --badge-border: rgba(0, 0, 0, 0.08);
+      --shadow-color: rgba(100, 116, 139, 0.15);
+    }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 16px;
-    overflow-x: hidden;
-  }
+    * {
+      box-sizing: border-box;
+      font-family: 'Prompt', sans-serif;
+    }
+    
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-  /* Responsive Toolbar */
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 12px;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1280px;
-    z-index: 20;
-  }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-  .toolbar-left, .toolbar-right {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
+    /* Glassmorphism panel styling */
+    .glass-panel {
+      background: var(--panel-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 30px -5px var(--shadow-color);
+    }
 
-  .btn {
-    padding: 7px 14px;
-    border-radius: 8px;
-    font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1px solid #334155;
-    background: #1e293b;
-    color: #f8fafc;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn:hover { background: #334155; border-color: #64748b; }
-  .btn-primary {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    border-color: #10b981;
-    color: #ffffff;
-    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
-  }
-  .btn-primary:hover {
-    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-  }
+    .dg-item {
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left-width: 4px;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
 
-  /* Device Orientation / Mobile Notice */
-  .mobile-hint {
-    display: none;
-    font-size: 11px;
-    color: #38bdf8;
-    background: rgba(56, 189, 248, 0.1);
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    padding: 6px 12px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    width: 100%;
-    max-width: 1280px;
-    text-align: center;
-  }
+    .dg-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
 
-  @media (max-width: 768px) and (orientation: portrait) {
-    .mobile-hint { display: block; }
-  }
+    .dg-item.active {
+      transform: translateX(6px);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2), 0 6px 16px var(--shadow-color);
+    }
 
-  /* Responsive Stage Container - Auto Scales to Fit any Viewport */
-  .stage-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    position: relative;
-    overflow: visible;
-  }
+    .dg-item.dimmed, .wp-card.dimmed {
+      opacity: 0.22 !important;
+      filter: grayscale(85%);
+      transform: scale(0.985);
+    }
 
-  .stage-scaler {
-    transform-origin: top center;
-    transition: transform 0.15s ease-out;
-    flex-shrink: 0;
-  }
+    .wp-card {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left-width: 6px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    }
 
-  /* Slide 16:9 Standard Frame */
-  .presentation-wrapper {
-    width: 1280px;
-    height: 720px;
-    background-color: #0d1527;
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
-  .presentation-wrapper.light-theme {
-    background-color: #f8fafc;
-    border-color: #cbd5e1;
-    color: #0f172a;
-  }
+    .wp-card:hover {
+      transform: translateX(-4px);
+      box-shadow: 0 6px 18px var(--shadow-color);
+    }
 
-  /* Header */
-  .slide-header {
-    height: 76px;
-    padding: 14px 32px 10px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 10;
-  }
-  .light-theme .slide-header { border-bottom-color: rgba(0, 0, 0, 0.08); }
-  .title-group h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.3px; }
-  .title-group p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
-  .light-theme .title-group p { color: #64748b; }
+    .wp-card.active {
+      transform: translateX(-6px);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25), 0 8px 24px var(--shadow-color);
+    }
 
-  .header-metrics {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .metric-badge {
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11.5px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  .badge-core { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-  .badge-opt { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    svg.connector-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
 
-  /* Body Content */
-  .slide-body {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 320px 1fr 340px;
-    padding: 10px 32px 16px 32px;
-    position: relative;
-    z-index: 10;
-  }
+    .flow-path {
+      fill: none;
+      transition: stroke-opacity 0.25s ease, stroke-width 0.25s ease;
+      stroke-linecap: round;
+    }
 
-  .col-title {
-    font-size: 11.5px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 4px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .light-theme .col-title { border-bottom-color: rgba(0, 0, 0, 0.08); }
-  .col-title.left { color: #38bdf8; }
-  .col-title.right { color: #34d399; }
+    .flow-path.active-path {
+      stroke-opacity: 0.95 !important;
+      stroke-width: 3.8px !important;
+      filter: drop-shadow(0 0 5px currentColor);
+    }
 
-  /* Left DG List */
-  .col-subpillars {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100% - 24px);
-  }
-  .dg-item {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 4.5px 10px;
-    border-radius: 5px;
-    background: #162032;
-    border-left: 4px solid #64748b;
-    color: #cbd5e1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .light-theme .dg-item {
-    background: #ffffff;
-    color: #1e293b;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  }
-  .dg-item:hover, .dg-item.active { transform: translateX(3px); }
-  .dg-item .dg-code { font-weight: 700; font-size: 9.5px; opacity: 0.85; padding: 1px 4px; border-radius: 3px; }
+    .flow-path.dimmed-path {
+      stroke-opacity: 0.05 !important;
+      stroke-width: 1.2px !important;
+    }
 
-  /* Right Work Package List */
-  .col-wps {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100% - 24px);
-  }
-  .wp-card {
-    padding: 8px 12px;
-    border-radius: 8px;
-    background: #162032;
-    border-left: 6px solid #64748b;
-    cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease, opacity 0.2s ease;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .light-theme .wp-card {
-    background: #ffffff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .wp-card:hover, .wp-card.active { transform: translateX(-3px); }
-  .wp-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2px;
-  }
-  .wp-title { font-size: 12.5px; font-weight: 800; }
-  .wp-badge {
-    font-size: 9px;
-    font-weight: 800;
-    padding: 2px 6px;
-    border-radius: 4px;
-    text-transform: uppercase;
-  }
-  .wp-desc {
-    font-size: 10px;
-    color: #94a3b8;
-    line-height: 1.25;
-  }
-  .light-theme .wp-desc { color: #64748b; }
-
-  /* SVG Ribbon Canvas Layer */
-  svg.sankey-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1280px;
-    height: 720px;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .sankey-path {
-    fill: none;
-    transition: stroke-opacity 0.2s ease, stroke-width 0.2s ease;
-  }
-
-  /* Footer */
-  .slide-footer {
-    height: 38px;
-    padding: 0 32px 8px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    color: #64748b;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    z-index: 10;
-  }
-  .light-theme .slide-footer { border-top-color: rgba(0, 0, 0, 0.05); color: #94a3b8; }
-</style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.5);
+    }
+  </style>
 </head>
-<body>
+<body class="p-3 md:p-6 flex flex-col items-center">
 
-<div class="mobile-hint">
-  💡 หากเปิดจากมือถือ แนะนำหมุนหน้าจอแนวนอน (Landscape) เพื่อความชัดเจนสูงสุด
-</div>
-
-<div class="toolbar">
-  <div class="toolbar-left">
-    <button class="btn" onclick="toggleTheme()">🌗 สลับธีม ขาว/ดำ</button>
-    <button class="btn" onclick="clearHighlight()">🔄 ล้างการเลือก</button>
-    <span style="font-size: 11.5px; color: #94a3b8;">* แตะหรือชี้เมาส์ที่รายการเพื่อดูความเชื่อมโยง</span>
-  </div>
-  <div class="toolbar-right">
-    <button class="btn btn-primary" onclick="downloadImage()">
-      📥 ดาวน์โหลดภาพสไลด์ PPT (1920x1080)
-    </button>
-  </div>
-</div>
-
-<!-- Auto-Scaling Stage -->
-<div class="stage-wrapper" id="stageWrapper">
-  <div class="stage-scaler" id="stageScaler">
-    <div class="presentation-wrapper" id="slideFrame">
-      <div class="slide-header">
-        <div class="title-group">
-          <h1>DG Survey Subpillars ➔ Work Packages Transformation</h1>
-          <p>โครงสร้างการจัดกลุ่มเกณฑ์ประเมินเดิมสู่แผนงานขับเคลื่อนองค์กรดิจิทัล (8 Work Packages)</p>
+  <div class="w-full max-w-[1380px] mb-4">
+    <!-- Header Card -->
+    <header class="glass-panel rounded-2xl p-4 md:p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <span class="px-2.5 py-1 text-xs font-semibold rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30">EXECUTIVE ARCHITECTURE</span>
+          <span class="text-xs text-slate-400">DG Assessment to Strategic Delivery Model</span>
         </div>
-        <div class="header-metrics">
-          <span class="metric-badge badge-core">Core Priority 65% (13 ข้อ)</span>
-          <span class="metric-badge badge-opt">Optional Priority 35% (7 ข้อ)</span>
-        </div>
+        <h1 class="text-xl md:text-2xl font-bold mt-1 tracking-tight">ความเชื่อมโยง DG Survey กับ Strategic Work Packages</h1>
+        <p class="text-xs md:text-sm text-slate-400 mt-0.5">การจัดกลุ่ม 20 หัวข้อย่อยการประเมินรัฐบาลดิจิทัล (7 เสาหลัก) เข้าสู่ 8 แผนงานปฏิบัติการ</p>
       </div>
 
-      <div class="slide-body">
-        <!-- Left: DG Subpillars -->
-        <div>
-          <div class="col-title left">
-            <span>DG Survey (20 Subpillars)</span>
-            <span>Pillar 1 - 7</span>
+      <!-- Quick Summary Stats -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/25">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <div class="text-xs">
+            <span class="font-bold text-emerald-400">5 Core WPs</span>
+            <span class="text-slate-400 ml-1">(14 ข้อย่อย)</span>
           </div>
-          <div class="col-subpillars" id="dgContainer"></div>
         </div>
-
-        <!-- Center Space for Bezier Flows -->
-        <div></div>
-
-        <!-- Right: Work Packages -->
-        <div>
-          <div class="col-title right">
-            <span>Work Packages (WP01 - WP08)</span>
-            <span>Priority Group</span>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/25">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          <div class="text-xs">
+            <span class="font-bold text-amber-400">3 Optional WPs</span>
+            <span class="text-slate-400 ml-1">(6 ข้อย่อย)</span>
           </div>
-          <div class="col-wps" id="wpContainer"></div>
         </div>
       </div>
+    </header>
 
-      <!-- SVG Curved Connections with fixed 1280x720 viewBox -->
-      <svg class="sankey-layer" id="sankeySvg" viewBox="0 0 1280 720"></svg>
+    <div class="glass-panel rounded-xl mt-3 px-4 py-3 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-slate-400 font-medium mr-1">🔍 มุมมองด่วน:</span>
 
-      <div class="slide-footer">
-        <span>สถาปัตยกรรมมาตรการยกระดับ DG Transformation &bull; อัตราส่วนสไลด์ 16:9 มาตรฐาน</span>
-        <span>สรุปข้อมูล: รวมเรื่อง Data เป็น WP01 และรวมความมั่นคงโครงสร้างพื้นฐานเป็น WP06</span>
+        <!-- Core Priority Filter Button -->
+        <button id="btnCore" onclick="filterByGroup('Core')" 
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/40 transition font-medium">
+          <span class="text-sm">🎯</span>
+          <span>Core Priority (WP01-05)</span>
+          <span class="text-[10px] bg-emerald-500/30 px-1.5 py-0.5 rounded font-mono font-bold">5 WPs</span>
+        </button>
+
+        <!-- Optional Filter Button -->
+        <button id="btnOptional" onclick="filterByGroup('Optional')" 
+                class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-600/20 text-amber-300 hover:bg-amber-600/30 border border-amber-500/40 transition font-medium">
+          <span class="text-sm">💡</span>
+          <span>Optional Scope (WP06-08)</span>
+          <span class="text-[10px] bg-amber-500/30 px-1.5 py-0.5 rounded font-mono font-bold">3 WPs</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="btnReset" onclick="resetAllHighlights()" 
+                class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-700/40 text-slate-300 hover:bg-slate-700/60 border border-slate-600/50 transition">
+          <span>🔄</span>
+          <span>แสดงทั้งหมด</span>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleTheme()" 
+                class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 border border-slate-600/40 text-slate-300 transition">
+          <span id="themeIcon">🌗</span>
+          <span id="themeLabel">สลับธีม สว่าง/มืด</span>
+        </button>
+        <span class="hidden sm:inline text-slate-400 text-[11px]">* คลิกรายการใดๆ เพื่อล็อกดูเส้นทางความเชื่อมโยง</span>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-const items = [
-  { id: '1-1', code: '1.1', name: 'pillar1 - 1.1 Digital policy', wp: 'WP07' },
-  { id: '1-2', code: '1.2', name: 'pillar1 - 1.2 Cyber Security Policy', wp: 'WP06' },
-  { id: '1-3', code: '1.3', name: 'pillar1 - 1.3 Legal & Regulatory Mechanism', wp: 'WP07' },
-  { id: '1-4', code: '1.4', name: 'pillar1 - 1.4 Data Policy', wp: 'WP01' },
-  { id: '2-1', code: '2.1', name: 'pillar2 - 2.1 Data Governance', wp: 'WP01' },
-  { id: '2-2', code: '2.2', name: 'pillar2 - 2.2 Data Privacy', wp: 'WP01' },
-  { id: '2-3', code: '2.3', name: 'pillar2 - 2.3 Open Data', wp: 'WP01' },
-  { id: '2-4', code: '2.4', name: 'pillar2 - 2.4 Sharable Data', wp: 'WP01' },
-  { id: '3-1', code: '3.1', name: 'pillar3 - 3.1 Digital leadership', wp: 'WP07' },
-  { id: '3-2', code: '3.2', name: 'pillar3 - 3.2 Training and Development', wp: 'WP02' },
-  { id: '3-3', code: '3.3', name: 'pillar3 - 3.3 Digital Competency', wp: 'WP02' },
-  { id: '4-1', code: '4.1', name: 'pillar4 - 4.1 Service Provision', wp: 'WP03' },
-  { id: '4-2', code: '4.2', name: 'pillar4 - 4.2 Customer Experience', wp: 'WP03' },
-  { id: '4-3', code: '4.3', name: 'pillar4 - 4.3 Promotion for Digital Service Usage', wp: 'WP03' },
-  { id: '4-4', code: '4.4', name: 'pillar4 - 4.4 Public Participation', wp: 'WP08' },
-  { id: '5-1', code: '5.1', name: 'pillar5 - 5.1 Integrated enterprise', wp: 'WP04' },
-  { id: '5-2', code: '5.2', name: 'pillar5 - 5.2 Process Optimization', wp: 'WP04' },
-  { id: '6-1', code: '6.1', name: 'Pillar6 - 6.1 Reliable infrastructure', wp: 'WP06' },
-  { id: '6-2', code: '6.2', name: 'Pillar6 - 6.2 Cyber security', wp: 'WP06' },
-  { id: '7-1', code: '7.1', name: 'Pillar7 Digital Technology Practices', wp: 'WP05' }
-];
-
-const wps = [
-  { id: 'WP01', name: 'WP01: Data-Driven', group: 'Core', color: '#10b981', desc: 'รวบรวม 5 ข้อย่อย: นโยบาย, ธรรมาภิบาล, ความเป็นส่วนตัว, Open & Sharing' },
-  { id: 'WP02', name: 'WP02: Digital Workforce', group: 'Core', color: '#06b6d4', desc: 'ยกระดับทักษะและการพัฒนาความพร้อมดิจิทัลของบุคลากร' },
-  { id: 'WP03', name: 'WP03: Digital Service', group: 'Core', color: '#3b82f6', desc: 'พัฒนาบริการดิจิทัลประชาชน ประสบการณ์ผู้ใช้ และการส่งเสริมการใช้งาน' },
-  { id: 'WP04', name: 'WP04: Digital Workplace', group: 'Core', color: '#8b5cf6', desc: 'บูรณาการระบบทำงานภายใน ปรับปรุงกระบวนการทำงานให้เป็นดิจิทัล' },
-  { id: 'WP05', name: 'WP05: Emerging Tech', group: 'Core', color: '#ec4899', desc: 'ประยุกต์ใช้นวัตกรรมดิจิทัล เทคโนโลยีใหม่ และระบบอัตโนมัติ' },
-  { id: 'WP06', name: 'WP06: Cloud & Cyber', group: 'Optional', color: '#f59e0b', desc: 'ระบบโครงสร้างพื้นฐานที่มีเสถียรภาพ และความมั่นคงปลอดภัยไซเบอร์' },
-  { id: 'WP07', name: 'WP07: Digital Policy', group: 'Optional', color: '#eab308', desc: 'นโยบายดิจิทัล กลไกทางกฎหมาย และการเสริมสร้างภาวะผู้นำดิจิทัล' },
-  { id: 'WP08', name: 'WP08: Open Gov', group: 'Optional', color: '#f97316', desc: 'การมีส่วนร่วมของภาคประชาชนและช่องทางรับฟังความคิดเห็น' }
-];
-
-let isLight = false;
-let currentHighlight = null;
-
-function init() {
-  const dgContainer = document.getElementById('dgContainer');
-  const wpContainer = document.getElementById('wpContainer');
-
-  // Render DG Subpillars
-  items.forEach(item => {
-    const wpObj = wps.find(w => w.id === item.wp);
-    const div = document.createElement('div');
-    div.className = 'dg-item';
-    div.id = 'dg-' + item.id;
-    div.style.borderLeftColor = wpObj.color;
-    div.innerHTML = `
-      <span>${item.name}</span>
-      <span class="dg-code" style="background:${wpObj.color}22; color:${wpObj.color}">${item.wp}</span>
-    `;
+  <main class="w-full max-w-[1380px] relative glass-panel rounded-2xl p-4 md:p-6 overflow-hidden">
     
-    // Mouse hover
-    div.addEventListener('mouseenter', () => highlight('item', item.id));
-    div.addEventListener('mouseleave', clearHighlight);
-    // Touch tap for mobile/iPad
-    div.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentHighlight && currentHighlight.type === 'item' && currentHighlight.targetId === item.id) {
-        clearHighlight();
-      } else {
-        highlight('item', item.id);
-      }
-    });
-    dgContainer.appendChild(div);
-  });
+    <!-- SVG Connector Canvas overlay -->
+    <svg id="connectorCanvas" class="connector-canvas" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Gradients and filters for connectors -->
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+      <g id="pathsGroup"></g>
+    </svg>
 
-  // Render Work Packages
-  wps.forEach(wp => {
-    const isCore = wp.group === 'Core';
-    const div = document.createElement('div');
-    div.className = 'wp-card';
-    div.id = 'wp-' + wp.id;
-    div.style.borderLeftColor = wp.color;
-    div.innerHTML = `
-      <div class="wp-header">
-        <span class="wp-title" style="color:${wp.color}">${wp.name}</span>
-        <span class="wp-badge ${isCore ? 'badge-core' : 'badge-opt'}">${wp.group}</span>
+    <!-- Grid Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 relative z-20">
+      
+      <!-- Left Column: DG Survey Subpillars (20 items) -->
+      <div class="md:col-span-5 flex flex-col">
+        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-700/40">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+            <h2 class="font-bold text-sm tracking-wide text-blue-300 uppercase">20 ข้อย่อยตามแบบประเมิน DG Survey (7 เสาหลัก)</h2>
+          </div>
+          <span class="text-xs text-slate-400 font-mono">20 Sub-Pillars</span>
+        </div>
+
+        <div id="dgContainer" class="flex flex-col gap-1.5">
+          <!-- Populated by JavaScript -->
+        </div>
       </div>
-      <div class="wp-desc">${wp.desc}</div>
-    `;
 
-    // Mouse hover
-    div.addEventListener('mouseenter', () => highlight('wp', wp.id));
-    div.addEventListener('mouseleave', clearHighlight);
-    // Touch tap for mobile/iPad
-    div.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentHighlight && currentHighlight.type === 'wp' && currentHighlight.targetId === wp.id) {
-        clearHighlight();
+      <!-- Center Spacer / Flow Indicator -->
+      <div class="hidden md:flex md:col-span-2 flex-col items-center justify-center text-center px-1">
+        <div class="py-2 px-3 rounded-full bg-slate-800/80 border border-slate-700 text-[11px] text-slate-400 font-mono mb-2 shadow-inner">
+          MAPPING FLOW
+        </div>
+        <div class="text-[11px] text-slate-500 max-w-[120px] leading-relaxed">
+          เชื่อมโยงเป้าประสงค์ประเมินสู่แผนงานปฏิบัติการ
+        </div>
+      </div>
+
+      <!-- Right Column: Work Packages (8 items) -->
+      <div class="md:col-span-5 flex flex-col">
+        <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-700/40">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <h2 class="font-bold text-sm tracking-wide text-emerald-300 uppercase">8 Strategic Work Packages (WPs)</h2>
+          </div>
+          <span class="text-xs text-slate-400 font-mono">8 WPs</span>
+        </div>
+
+        <div id="wpContainer" class="flex flex-col gap-2.5 justify-between h-full">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="w-full max-w-[1380px] mt-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-400 px-2">
+    <div class="flex items-center gap-4 flex-wrap">
+      <div class="flex items-center gap-1.5">
+        <span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span>
+        <span>WP01-WP05: แผนงานหลัก (Core Priority) เพื่อการขับเคลื่อนขั้นพื้นฐานและยุทธศาสตร์หลัก</span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span class="w-3 h-3 rounded bg-amber-500 inline-block"></span>
+        <span>WP06-WP08: แผนงานส่วนขยาย (Optional Scope) สำหรับเสริมศักยภาพเฉพาะด้าน</span>
+      </div>
+    </div>
+    <div class="text-[11px] text-slate-400">
+      Executive Strategy Map &bull; รองรับการแสดงผลทั้งมือถือ แท็บเล็ต และจอโปรเจกเตอร์
+    </div>
+  </footer>
+
+  <script>
+    // 20 Sub-pillar items across 7 pillars
+    const items = [
+      { id: '1-1', code: '1.1', name: '1.1 นโยบายดิจิทัลภาครัฐ (Digital Policy)', pillar: 'Pillar 1 นโยบายและกฎหมาย', wp: 'WP07' },
+      { id: '1-2', code: '1.2', name: '1.2 นโยบายความมั่นคงปลอดภัยไซเบอร์ (Cyber Policy)', pillar: 'Pillar 1 นโยบายและกฎหมาย', wp: 'WP06' },
+      { id: '1-3', code: '1.3', name: '1.3 กลไกกฎหมายและระเบียบปฏิบัติ (Legal & Reg.)', pillar: 'Pillar 1 นโยบายและกฎหมาย', wp: 'WP07' },
+      { id: '1-4', code: '1.4', name: '1.4 นโยบายและการกำกับดูแลข้อมูล (Data Policy)', pillar: 'Pillar 1 นโยบายและกฎหมาย', wp: 'WP01' },
+      
+      { id: '2-1', code: '2.1', name: '2.1 ธรรมาภิบาลข้อมูลภาครัฐ (Data Governance)', pillar: 'Pillar 2 การบริหารจัดการข้อมูล', wp: 'WP01' },
+      { id: '2-2', code: '2.2', name: '2.2 การคุ้มครองข้อมูลส่วนบุคคล (Data Privacy)', pillar: 'Pillar 2 การบริหารจัดการข้อมูล', wp: 'WP01' },
+      { id: '2-3', code: '2.3', name: '2.3 ข้อมูลเปิดภาครัฐ (Open Data)', pillar: 'Pillar 2 การบริหารจัดการข้อมูล', wp: 'WP01' },
+      { id: '2-4', code: '2.4', name: '2.4 การแบ่งปันและแลกเปลี่ยนข้อมูล (Sharable Data)', pillar: 'Pillar 2 การบริหารจัดการข้อมูล', wp: 'WP01' },
+      
+      { id: '3-1', code: '3.1', name: '3.1 ภาวะผู้นำดิจิทัล (Digital Leadership)', pillar: 'Pillar 3 ทรัพยากรบุคคลและความสามารถ', wp: 'WP07' },
+      { id: '3-2', code: '3.2', name: '3.2 การฝึกอบรมและพัฒนาทักษะ (Training & Dev.)', pillar: 'Pillar 3 ทรัพยากรบุคคลและความสามารถ', wp: 'WP02' },
+      { id: '3-3', code: '3.3', name: '3.3 สมรรถนะด้านดิจิทัลของบุคลากร (Digital Competency)', pillar: 'Pillar 3 ทรัพยากรบุคคลและความสามารถ', wp: 'WP02' },
+      
+      { id: '4-1', code: '4.1', name: '4.1 การส่งมอบบริการดิจิทัล (Service Provision)', pillar: 'Pillar 4 บริการดิจิทัล', wp: 'WP03' },
+      { id: '4-2', code: '4.2', name: '4.2 ประสบการณ์ผู้รับบริการ (Customer Experience)', pillar: 'Pillar 4 บริการดิจิทัล', wp: 'WP03' },
+      { id: '4-3', code: '4.3', name: '4.3 การส่งเสริมการใช้งานบริการดิจิทัล (Service Usage)', pillar: 'Pillar 4 บริการดิจิทัล', wp: 'WP03' },
+      { id: '4-4', code: '4.4', name: '4.4 การมีส่วนร่วมของประชาชน (Public Participation)', pillar: 'Pillar 4 บริการดิจิทัล', wp: 'WP08' },
+      
+      { id: '5-1', code: '5.1', name: '5.1 สถาปัตยกรรมและการบูรณาการองค์กร (Integrated Enterprise)', pillar: 'Pillar 5 การบริหารจัดการภายใน', wp: 'WP04' },
+      { id: '5-2', code: '5.2', name: '5.2 การปรับปรุงกระบวนการทำงาน (Process Optimization)', pillar: 'Pillar 5 การบริหารจัดการภายใน', wp: 'WP04' },
+      
+      { id: '6-1', code: '6.1', name: '6.1 โครงสร้างพื้นฐานที่มีเสถียรภาพ (Reliable Infra)', pillar: 'Pillar 6 โครงสร้างพื้นฐานและความมั่นคง', wp: 'WP06' },
+      { id: '6-2', code: '6.2', name: '6.2 ความมั่นคงปลอดภัยสารสนเทศและไซเบอร์ (Cybersecurity)', pillar: 'Pillar 6 โครงสร้างพื้นฐานและความมั่นคง', wp: 'WP06' },
+      
+      { id: '7-1', code: '7.1', name: '7.1 แนวปฏิบัติเทคโนโลยีดิจิทัลขั้นสูง (Digital Tech Practices)', pillar: 'Pillar 7 เทคโนโลยีดิจิทัล', wp: 'WP05' }
+    ];
+
+    // 8 Strategic Work Packages
+    const wps = [
+      { id: 'WP01', name: 'WP01: Data-Driven Organization', group: 'Core', color: '#10b981', count: 5, desc: 'รวบรวม 5 ข้อย่อยหลัก: Data Policy, Governance, Privacy, Open Data และ Data Sharing' },
+      { id: 'WP02', name: 'WP02: Digital Workforce & Skills', group: 'Core', color: '#06b6d4', count: 2, desc: 'พัฒนาสมรรถนะบุคลากร ทักษะดิจิทัล และหลักสูตร Upskill/Reskill เจ้าหน้าที่' },
+      { id: 'WP03', name: 'WP03: Digital Service Excellence', group: 'Core', color: '#3b82f6', count: 3, desc: 'ยกระดับบริการประชาชน (e-Service), ประสบการณ์ผู้ใช้ (UX/UI) และการส่งเสริมการใช้งาน' },
+      { id: 'WP04', name: 'WP04: Digital Workplace & Integration', group: 'Core', color: '#8b5cf6', count: 2, desc: 'บูรณาการระบบงานภายในองค์กร (EA) และปรับปรุงกระบวนการทำงานอัตโนมัติ (Workflow)' },
+      { id: 'WP05', name: 'WP05: Emerging Tech & Innovation', group: 'Core', color: '#ec4899', count: 1, desc: 'นำเทคโนโลยีขั้นสูงมาประยุกต์ใช้ เช่น AI, Automation และนวัตกรรมดิจิทัลภาครัฐ' },
+      { id: 'WP06', name: 'WP06: Cloud Infrastructure & Cyber Security', group: 'Optional', color: '#f59e0b', count: 3, desc: 'โครงสร้างพื้นฐานคลาวด์ เสถียรภาพระบบ และการบริหารความมั่นคงปลอดภัยไซเบอร์' },
+      { id: 'WP07', name: 'WP07: Digital Policy & Strategic Leadership', group: 'Optional', color: '#eab308', count: 3, desc: 'นโยบายยุทธศาสตร์ กฎหมายระเบียบที่เกี่ยวข้อง และการขับเคลื่อนภาวะผู้นำดิจิทัล' },
+      { id: 'WP08', name: 'WP08: Open Government & Civic Engagement', group: 'Optional', color: '#f97316', count: 1, desc: 'การมีส่วนร่วมของภาคประชาชน การรับฟังความคิดเห็น และความโปร่งใสภาครัฐ' }
+    ];
+
+    let isLightMode = false;
+    let selectedMode = null; // 'item', 'wp', 'group', or null
+    let activeId = null;     // specific id or group name
+
+    // Helper to get WP object by id
+    function getWP(wpId) {
+      return wps.find(w => w.id === wpId);
+    }
+
+    function buildInterface() {
+      const dgContainer = document.getElementById('dgContainer');
+      const wpContainer = document.getElementById('wpContainer');
+
+      dgContainer.innerHTML = '';
+      wpContainer.innerHTML = '';
+
+      // Render DG Sub-pillars
+      items.forEach(item => {
+        const wp = getWP(item.wp);
+        const div = document.createElement('div');
+        div.className = 'dg-item';
+        div.id = `dg-${item.id}`;
+        div.dataset.wp = item.wp;
+        div.dataset.group = wp.group;
+        div.style.borderLeftColor = wp.color;
+
+        div.innerHTML = `
+          <div class="flex items-center gap-2 overflow-hidden pr-2">
+            <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background-color: ${wp.color}"></span>
+            <span class="truncate">${item.name}</span>
+          </div>
+          <div class="flex items-center gap-1.5 flex-shrink-0 font-mono">
+            <span class="text-[10px] px-1.5 py-0.5 rounded font-bold" 
+                  style="background-color: ${wp.color}22; color: ${wp.color}; border: 1px solid ${wp.color}44;">
+              ${item.wp}
+            </span>
+          </div>
+        `;
+
+        div.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleItemClick(item.id);
+        });
+
+        dgContainer.appendChild(div);
+      });
+
+      // Render Work Packages
+      wps.forEach(wp => {
+        const isCore = wp.group === 'Core';
+        const card = document.createElement('div');
+        card.className = 'wp-card';
+        card.id = `wp-${wp.id}`;
+        card.dataset.id = wp.id;
+        card.dataset.group = wp.group;
+        card.style.borderLeftColor = wp.color;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-xs md:text-sm tracking-tight" style="color: ${wp.color}">
+                ${wp.name}
+              </span>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full font-bold border ${isCore ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-amber-500/15 text-amber-300 border-amber-500/30'}">
+                ${wp.group}
+              </span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700/50 text-slate-300 border border-slate-600/40">
+                ${wp.count} ข้อย่อย
+              </span>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+            ${wp.desc}
+          </div>
+        `;
+
+        card.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleWPClick(wp.id);
+        });
+
+        wpContainer.appendChild(card);
+      });
+
+      // Click outside canvas to reset
+      document.addEventListener('click', (e) => {
+        // If not clicking inside interactive items or buttons
+        if (!e.target.closest('.dg-item') && !e.target.closest('.wp-card') && !e.target.closest('button')) {
+          resetAllHighlights();
+        }
+      });
+    }
+
+    function drawConnectorPaths() {
+      const svg = document.getElementById('connectorCanvas');
+      const group = document.getElementById('pathsGroup');
+      const svgRect = svg.getBoundingClientRect();
+
+      group.innerHTML = '';
+
+      // Only draw connecting lines on screens wide enough (stacked on mobile)
+      if (window.innerWidth < 768) {
+        return;
+      }
+
+      items.forEach(item => {
+        const dgEl = document.getElementById(`dg-${item.id}`);
+        const wpEl = document.getElementById(`wp-${item.wp}`);
+        if (!dgEl || !wpEl) return;
+
+        const dgRect = dgEl.getBoundingClientRect();
+        const wpRect = wpEl.getBoundingClientRect();
+        const wpData = getWP(item.wp);
+
+        // Coordinates relative to SVG canvas
+        const startX = dgRect.right - svgRect.left;
+        const startY = dgRect.top + (dgRect.height / 2) - svgRect.top;
+
+        const endX = wpRect.left - svgRect.left;
+        const endY = wpRect.top + (wpRect.height / 2) - svgRect.top;
+
+        // Smooth Bezier Curve
+        const deltaX = (endX - startX) * 0.55;
+        const cp1X = startX + deltaX;
+        const cp1Y = startY;
+        const cp2X = endX - deltaX;
+        const cp2Y = endY;
+
+        const pathD = `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathD);
+        path.setAttribute('id', `path-${item.id}`);
+        path.setAttribute('class', 'flow-path');
+        path.setAttribute('stroke', wpData.color);
+        path.setAttribute('stroke-width', '2.2');
+        path.setAttribute('stroke-opacity', '0.38');
+        path.dataset.dgId = item.id;
+        path.dataset.wpId = item.wp;
+        path.dataset.group = wpData.group;
+
+        group.appendChild(path);
+      });
+
+      // Re-apply highlight styles if there was an active selection
+      applyCurrentHighlightView();
+    }
+
+    function handleItemClick(itemId) {
+      if (selectedMode === 'item' && activeId === itemId) {
+        resetAllHighlights();
+        return;
+      }
+      selectedMode = 'item';
+      activeId = itemId;
+      applyCurrentHighlightView();
+    }
+
+    function handleWPClick(wpId) {
+      if (selectedMode === 'wp' && activeId === wpId) {
+        resetAllHighlights();
+        return;
+      }
+      selectedMode = 'wp';
+      activeId = wpId;
+      applyCurrentHighlightView();
+    }
+
+    // Filter by group: 'Core' or 'Optional'
+    function filterByGroup(groupName) {
+      if (selectedMode === 'group' && activeId === groupName) {
+        resetAllHighlights();
+        return;
+      }
+      selectedMode = 'group';
+      activeId = groupName;
+      applyCurrentHighlightView();
+    }
+
+    // Reset everything
+    function resetAllHighlights() {
+      selectedMode = null;
+      activeId = null;
+
+      // Reset all DOM classes
+      document.querySelectorAll('.dg-item').forEach(el => {
+        el.classList.remove('active', 'dimmed');
+      });
+      document.querySelectorAll('.wp-card').forEach(el => {
+        el.classList.remove('active', 'dimmed');
+      });
+      document.querySelectorAll('.flow-path').forEach(el => {
+        el.classList.remove('active-path', 'dimmed-path');
+        el.setAttribute('stroke-opacity', '0.38');
+        el.setAttribute('stroke-width', '2.2');
+      });
+
+      // Reset button styles
+      updateToolbarButtonStyles(null);
+    }
+
+    function applyCurrentHighlightView() {
+      if (!selectedMode) {
+        resetAllHighlights();
+        return;
+      }
+
+      updateToolbarButtonStyles(selectedMode === 'group' ? activeId : null);
+
+      // Case 1: Filter by Group ('Core' or 'Optional')
+      if (selectedMode === 'group') {
+        const targetGroup = activeId;
+
+        // DG items
+        items.forEach(item => {
+          const dgEl = document.getElementById(`dg-${item.id}`);
+          const isMatch = (dgEl.dataset.group === targetGroup);
+          dgEl.classList.toggle('active', isMatch);
+          dgEl.classList.toggle('dimmed', !isMatch);
+        });
+
+        // WP cards
+        wps.forEach(wp => {
+          const wpEl = document.getElementById(`wp-${wp.id}`);
+          const isMatch = (wp.group === targetGroup);
+          wpEl.classList.toggle('active', isMatch);
+          wpEl.classList.toggle('dimmed', !isMatch);
+        });
+
+        // SVG Paths
+        document.querySelectorAll('.flow-path').forEach(path => {
+          const isMatch = (path.dataset.group === targetGroup);
+          path.classList.toggle('active-path', isMatch);
+          path.classList.toggle('dimmed-path', !isMatch);
+        });
+      }
+
+      // Case 2: Selected single DG Item
+      else if (selectedMode === 'item') {
+        const targetItem = items.find(i => i.id === activeId);
+        if (!targetItem) return;
+
+        items.forEach(item => {
+          const dgEl = document.getElementById(`dg-${item.id}`);
+          const isMatch = (item.id === activeId);
+          dgEl.classList.toggle('active', isMatch);
+          dgEl.classList.toggle('dimmed', !isMatch);
+        });
+
+        wps.forEach(wp => {
+          const wpEl = document.getElementById(`wp-${wp.id}`);
+          const isMatch = (wp.id === targetItem.wp);
+          wpEl.classList.toggle('active', isMatch);
+          wpEl.classList.toggle('dimmed', !isMatch);
+        });
+
+        document.querySelectorAll('.flow-path').forEach(path => {
+          const isMatch = (path.dataset.dgId === activeId);
+          path.classList.toggle('active-path', isMatch);
+          path.classList.toggle('dimmed-path', !isMatch);
+        });
+      }
+
+      // Case 3: Selected Work Package
+      else if (selectedMode === 'wp') {
+        items.forEach(item => {
+          const dgEl = document.getElementById(`dg-${item.id}`);
+          const isMatch = (item.wp === activeId);
+          dgEl.classList.toggle('active', isMatch);
+          dgEl.classList.toggle('dimmed', !isMatch);
+        });
+
+        wps.forEach(wp => {
+          const wpEl = document.getElementById(`wp-${wp.id}`);
+          const isMatch = (wp.id === activeId);
+          wpEl.classList.toggle('active', isMatch);
+          wpEl.classList.toggle('dimmed', !isMatch);
+        });
+
+        document.querySelectorAll('.flow-path').forEach(path => {
+          const isMatch = (path.dataset.wpId === activeId);
+          path.classList.toggle('active-path', isMatch);
+          path.classList.toggle('dimmed-path', !isMatch);
+        });
+      }
+    }
+
+    function updateToolbarButtonStyles(activeGroup) {
+      const btnCore = document.getElementById('btnCore');
+      const btnOptional = document.getElementById('btnOptional');
+
+      if (activeGroup === 'Core') {
+        btnCore.classList.add('ring-2', 'ring-emerald-400', 'bg-emerald-600/40');
+        btnOptional.classList.remove('ring-2', 'ring-amber-400', 'bg-amber-600/40');
+      } else if (activeGroup === 'Optional') {
+        btnOptional.classList.add('ring-2', 'ring-amber-400', 'bg-amber-600/40');
+        btnCore.classList.remove('ring-2', 'ring-emerald-400', 'bg-emerald-600/40');
       } else {
-        highlight('wp', wp.id);
+        btnCore.classList.remove('ring-2', 'ring-emerald-400', 'bg-emerald-600/40');
+        btnOptional.classList.remove('ring-2', 'ring-amber-400', 'bg-amber-600/40');
       }
+    }
+
+    function toggleTheme() {
+      isLightMode = !isLightMode;
+      document.body.classList.toggle('light-theme', isLightMode);
+
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+
+      if (isLightMode) {
+        icon.textContent = '☀️';
+        label.textContent = 'โหมดสว่าง (Light)';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'โหมดมืด (Dark)';
+      }
+    }
+
+    // Resize handling with debounce
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        drawConnectorPaths();
+      }, 100);
     });
-    wpContainer.appendChild(div);
-  });
 
-  // Tap anywhere outside to dismiss highlight on touch screens
-  document.addEventListener('click', () => clearHighlight());
-
-  // Initial render & responsive fit
-  autoFitScale();
-  drawPaths();
-}
-
-// Auto-Fit scaling to fit any screen size (Computer, iPad, Mobile)
-function autoFitScale() {
-  const scaler = document.getElementById('stageScaler');
-  const stageWrapper = document.getElementById('stageWrapper');
-  const availableWidth = window.innerWidth - 32; // 16px padding on each side
-  const availableHeight = window.innerHeight - 110; // offset for toolbar/padding
-
-  const scaleX = availableWidth / 1280;
-  const scaleY = availableHeight / 720;
-  let scale = Math.min(scaleX, scaleY);
-
-  // Maximum scale 1 (no pixelation), minimum proportional for mobile
-  if (scale > 1) scale = 1;
-  if (scale < 0.25) scale = 0.25;
-
-  scaler.style.transform = `scale(${scale})`;
-  stageWrapper.style.height = `${720 * scale}px`;
-}
-
-function getCoords() {
-  const frame = document.getElementById('slideFrame');
-  const frameRect = frame.getBoundingClientRect();
-  const currentScale = frameRect.width / 1280 || 1;
-  const coords = [];
-
-  const wpCounts = {};
-  wps.forEach(w => wpCounts[w.id] = { current: 0, total: items.filter(i => i.wp === w.id).length });
-
-  items.forEach(item => {
-    const dgEl = document.getElementById('dg-' + item.id);
-    const wpEl = document.getElementById('wp-' + item.wp);
-    const wpObj = wps.find(w => w.id === item.wp);
-
-    const r1 = dgEl.getBoundingClientRect();
-    const r2 = wpEl.getBoundingClientRect();
-
-    // Normalize coordinates back to original 1280x720 canvas coordinate space
-    const x1 = (r1.right - frameRect.left) / currentScale;
-    const y1 = ((r1.top + r1.height / 2) - frameRect.top) / currentScale;
-
-    const countInfo = wpCounts[item.wp];
-    const total = countInfo.total;
-    const idx = countInfo.current;
-    countInfo.current++;
-
-    const x2 = (r2.left - frameRect.left) / currentScale;
-    const pad = 8;
-    const availH = (r2.height / currentScale) - (pad * 2);
-    const step = total > 1 ? availH / (total - 1) : 0;
-    const y2 = total > 1 
-      ? ((r2.top - frameRect.top) / currentScale) + pad + (idx * step)
-      : ((r2.top + r2.height / 2) - frameRect.top) / currentScale;
-
-    coords.push({ item, wpObj, x1, y1, x2, y2 });
-  });
-
-  return coords;
-}
-
-function drawPaths() {
-  const svg = document.getElementById('sankeySvg');
-  svg.innerHTML = '';
-  const coords = getCoords();
-
-  coords.forEach(({ item, wpObj, x1, y1, x2, y2 }) => {
-    const dx = (x2 - x1) * 0.52;
-    const d = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('class', 'sankey-path');
-    path.setAttribute('id', `path-${item.id}`);
-    path.setAttribute('stroke', wpObj.color);
-    path.setAttribute('stroke-width', '2.8');
-    path.setAttribute('stroke-opacity', '0.42');
-    svg.appendChild(path);
-  });
-}
-
-function highlight(type, targetId) {
-  currentHighlight = { type, targetId };
-
-  items.forEach(item => {
-    const dgEl = document.getElementById('dg-' + item.id);
-    const path = document.getElementById('path-' + item.id);
-    const isTarget = (type === 'item' && item.id === targetId) || (type === 'wp' && item.wp === targetId);
-
-    if (isTarget) {
-      dgEl.style.opacity = '1';
-      dgEl.classList.add('active');
-      if (path) {
-        path.setAttribute('stroke-opacity', '0.95');
-        path.setAttribute('stroke-width', '4.2');
-        path.parentNode.appendChild(path);
-      }
-    } else {
-      dgEl.style.opacity = '0.2';
-      dgEl.classList.remove('active');
-      if (path) {
-        path.setAttribute('stroke-opacity', '0.05');
-        path.setAttribute('stroke-width', '1.5');
-      }
-    }
-  });
-
-  wps.forEach(wp => {
-    const wpEl = document.getElementById('wp-' + wp.id);
-    const matchedItem = items.find(i => i.id === targetId);
-    const isTarget = (type === 'wp' && wp.id === targetId) || (type === 'item' && matchedItem && matchedItem.wp === wp.id);
-
-    if (isTarget) {
-      wpEl.style.opacity = '1';
-      wpEl.classList.add('active');
-    } else {
-      wpEl.style.opacity = '0.2';
-      wpEl.classList.remove('active');
-    }
-  });
-}
-
-function clearHighlight() {
-  currentHighlight = null;
-  items.forEach(item => {
-    const dgEl = document.getElementById('dg-' + item.id);
-    const path = document.getElementById('path-' + item.id);
-    dgEl.style.opacity = '1';
-    dgEl.classList.remove('active');
-    if (path) {
-      path.setAttribute('stroke-opacity', '0.42');
-      path.setAttribute('stroke-width', '2.8');
-    }
-  });
-
-  wps.forEach(wp => {
-    const wpEl = document.getElementById('wp-' + wp.id);
-    wpEl.style.opacity = '1';
-    wpEl.classList.remove('active');
-  });
-}
-
-function toggleTheme() {
-  isLight = !isLight;
-  const frame = document.getElementById('slideFrame');
-  frame.classList.toggle('light-theme', isLight);
-}
-
-// Full Native 1920x1080 High-Res Canvas Export
-function downloadImage() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 1920;
-  canvas.height = 1080;
-  const ctx = canvas.getContext('2d');
-  const scale = 1920 / 1280;
-
-  // Background
-  ctx.fillStyle = isLight ? '#f8fafc' : '#0d1527';
-  ctx.fillRect(0, 0, 1920, 1080);
-
-  // Header Title
-  ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
-  ctx.font = 'bold ' + (20 * scale) + 'px -apple-system, sans-serif';
-  ctx.fillText('DG Survey Subpillars ➔ Work Packages Transformation', 32 * scale, 38 * scale);
-
-  ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
-  ctx.font = (12 * scale) + 'px -apple-system, sans-serif';
-  ctx.fillText('โครงสร้างการจัดกลุ่มเกณฑ์ประเมินเดิมสู่แผนงานขับเคลื่อนองค์กรดิจิทัล (8 Work Packages)', 32 * scale, 58 * scale);
-
-  // Metrics Badges
-  ctx.fillStyle = isLight ? '#e2e8f0' : '#1e293b';
-  ctx.fillRect(920 * scale, 24 * scale, 160 * scale, 28 * scale);
-  ctx.fillRect(1090 * scale, 24 * scale, 158 * scale, 28 * scale);
-
-  ctx.fillStyle = '#10b981';
-  ctx.font = 'bold ' + (11.5 * scale) + 'px -apple-system, sans-serif';
-  ctx.fillText('Core Priority 65% (13 ข้อ)', 935 * scale, 42 * scale);
-
-  ctx.fillStyle = '#f59e0b';
-  ctx.fillText('Optional Priority 35% (7 ข้อ)', 1102 * scale, 42 * scale);
-
-  // Divider Line
-  ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)';
-  ctx.lineWidth = 1 * scale;
-  ctx.beginPath();
-  ctx.moveTo(32 * scale, 76 * scale);
-  ctx.lineTo(1248 * scale, 76 * scale);
-  ctx.stroke();
-
-  // Column Headers
-  ctx.font = 'bold ' + (11.5 * scale) + 'px -apple-system, sans-serif';
-  ctx.fillStyle = '#38bdf8';
-  ctx.fillText('DG SURVEY (20 SUBPILLARS)', 32 * scale, 98 * scale);
-  ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
-  ctx.fillText('PILLAR 1 - 7', 280 * scale, 98 * scale);
-
-  ctx.fillStyle = '#34d399';
-  ctx.fillText('WORK PACKAGES (WP01 - WP08)', 908 * scale, 98 * scale);
-  ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
-  ctx.fillText('PRIORITY GROUP', 1145 * scale, 98 * scale);
-
-  const coords = getCoords();
-
-  // 1. Draw Bezier Paths
-  coords.forEach(({ wpObj, x1, y1, x2, y2 }) => {
-    const sx1 = x1 * scale;
-    const sy1 = y1 * scale;
-    const sx2 = x2 * scale;
-    const sy2 = y2 * scale;
-    const dx = (sx2 - sx1) * 0.52;
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(sx1, sy1);
-    ctx.bezierCurveTo(sx1 + dx, sy1, sx2 - dx, sy2, sx2, sy2);
-    ctx.strokeStyle = wpObj.color;
-    ctx.lineWidth = 3 * scale;
-    ctx.globalAlpha = 0.45;
-    ctx.stroke();
-    ctx.restore();
-  });
-
-  const frame = document.getElementById('slideFrame');
-  const frameRect = frame.getBoundingClientRect();
-  const currentScale = frameRect.width / 1280 || 1;
-
-  // 2. Draw DG Subpillars on Left
-  items.forEach(item => {
-    const el = document.getElementById('dg-' + item.id);
-    const r = el.getBoundingClientRect();
-    const x = ((r.left - frameRect.left) / currentScale) * scale;
-    const y = ((r.top - frameRect.top) / currentScale) * scale;
-    const w = (r.width / currentScale) * scale;
-    const h = (r.height / currentScale) * scale;
-    const wpObj = wps.find(wp => wp.id === item.wp);
-
-    ctx.fillStyle = isLight ? '#ffffff' : '#162032';
-    ctx.fillRect(x, y, w, h);
-    ctx.fillStyle = wpObj.color;
-    ctx.fillRect(x, y, 5 * scale, h);
-
-    ctx.fillStyle = isLight ? '#1e293b' : '#cbd5e1';
-    ctx.font = '500 ' + (10.5 * scale) + 'px -apple-system, sans-serif';
-    ctx.fillText(item.name, x + (10 * scale), y + h * 0.68);
-
-    ctx.fillStyle = wpObj.color;
-    ctx.font = 'bold ' + (9.5 * scale) + 'px -apple-system, sans-serif';
-    ctx.fillText(item.wp, x + w - (38 * scale), y + h * 0.68);
-  });
-
-  // 3. Draw WP Cards on Right
-  wps.forEach(wp => {
-    const el = document.getElementById('wp-' + wp.id);
-    const r = el.getBoundingClientRect();
-    const x = ((r.left - frameRect.left) / currentScale) * scale;
-    const y = ((r.top - frameRect.top) / currentScale) * scale;
-    const w = (r.width / currentScale) * scale;
-    const h = (r.height / currentScale) * scale;
-
-    ctx.fillStyle = isLight ? '#ffffff' : '#162032';
-    ctx.fillRect(x, y, w, h);
-    ctx.fillStyle = wp.color;
-    ctx.fillRect(x, y, 6 * scale, h);
-
-    ctx.font = 'bold ' + (12 * scale) + 'px -apple-system, sans-serif';
-    ctx.fillText(wp.name, x + (12 * scale), y + (16 * scale));
-
-    ctx.font = 'bold ' + (9 * scale) + 'px -apple-system, sans-serif';
-    ctx.fillText(wp.group.toUpperCase(), x + w - (48 * scale), y + (16 * scale));
-
-    ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
-    ctx.font = (9.5 * scale) + 'px -apple-system, sans-serif';
-    ctx.fillText(wp.desc, x + (12 * scale), y + (34 * scale));
-  });
-
-  // Footer
-  ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
-  ctx.beginPath();
-  ctx.moveTo(32 * scale, 685 * scale);
-  ctx.lineTo(1248 * scale, 685 * scale);
-  ctx.stroke();
-
-  ctx.fillStyle = isLight ? '#94a3b8' : '#64748b';
-  ctx.font = (11 * scale) + 'px -apple-system, sans-serif';
-  ctx.fillText('สถาปัตยกรรมมาตรการยกระดับ DG Transformation • 16:9 Presentation', 32 * scale, 706 * scale);
-  ctx.fillText('สรุปข้อมูล: รวมเรื่อง Data เป็น WP01 และรวมความมั่นคงโครงสร้างพื้นฐานเป็น WP06', 770 * scale, 706 * scale);
-
-  const link = document.createElement('a');
-  link.download = `DG_to_WP_Executive_16x9_${isLight ? 'Light' : 'Dark'}.png`;
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-}
-
-window.addEventListener('resize', () => {
-  autoFitScale();
-  drawPaths();
-});
-
-window.onload = init;
-</script>
+    window.addEventListener('load', () => {
+      buildInterface();
+      // Ensure layout geometry is computed before drawing SVGs
+      setTimeout(() => {
+        drawConnectorPaths();
+      }, 150);
+    });
+  </script>
 </body>
 </html>
